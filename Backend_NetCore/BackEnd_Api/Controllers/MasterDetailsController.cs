@@ -1,6 +1,7 @@
 ﻿using BackEnd_Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace BackEnd_Api.Controllers
 {
@@ -159,6 +160,7 @@ namespace BackEnd_Api.Controllers
         public async Task<IActionResult> GetMasterDataByInv([FromRoute] string invoiceno)
         {
             var data = await _context.MastersData.FirstOrDefaultAsync(x=>x.InvoiceNo==invoiceno);
+            data.Details = await _context.MasterDetailsData.Where(x => x.InvoiceNo == invoiceno).ToListAsync();
             return Ok(data);
         }
 
@@ -177,6 +179,35 @@ namespace BackEnd_Api.Controllers
             var data = await _context.MastersData.ToListAsync();
             return Ok(data);
         }
+
+
+        [HttpGet]
+        [Route("AutoGeberatedInvNo")]
+        public async Task<IActionResult> AutoGeberatedInvNo()
+        {
+            var invNo = "INV-"+DateTime.Now.Year+"-";
+
+            var data = await _context.MastersData.OrderByDescending(x => x.InvoiceDate).FirstOrDefaultAsync();
+            if (data==null)
+            {
+                invNo += "00001";
+            }
+            else
+            {
+                int lastserial = Convert.ToInt32(data.InvoiceNo.Substring(data.InvoiceNo.Length - 5));
+                lastserial = lastserial + 1;
+                if (lastserial.ToString().Length<5)
+                {
+                    for (int i = 0; i < 5 - lastserial.ToString().Length; i++)
+                    {
+                        invNo += "0";
+                    }
+                }
+                invNo += lastserial;
+            }
+            return Ok(new {InvNo = invNo});
+        }
+
 
         [HttpDelete]
         [Route("{invoiceno}")]
