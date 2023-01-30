@@ -1,0 +1,22 @@
+
+<div class="container my-5">
+    <h1 class="mb-3">
+        Add New
+    </h1>
+    <form #form="ngForm" (ngSubmit)="addDepartmentFunc()">
+      <p>
+        <mat-toolbar color="primary">
+          <span>ADD</span>
+        </mat-toolbar>
+      </p>
+        
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="name" id="name" 
+          name="name" [(ngModel)]="department.name">
+        </mat-form-field>
+        
+        
+        <button mat-raised-button color="primary" type="submit" class="mr-5">Submit</button>
+      </form>
+</div>

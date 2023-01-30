@@ -1,0 +1,92 @@
+
+<div class="container my-5">
+    <h1 class="mb-3">
+        Add New
+    </h1>
+    <form #form="ngForm" (ngSubmit)="addEmployeeFunc()">
+      <p>
+        <mat-toolbar color="primary">
+          <span>ADD</span>
+        </mat-toolbar>
+      </p>
+        <!-- name,email,phone,salary,department -->
+        <!-- <div class="mb-3">
+            <label for="id" class="form-label">Name</label>
+            <input type="text" class="form-control" id="id"  readonly
+            name="id" [(ngModel)]="employee.id">            
+          </div> -->
+        
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="name" d="name" 
+          name="name" [(ngModel)]="employee.name">
+        </mat-form-field>
+        <!-- <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" 
+          name="name" [(ngModel)]="employee.name">          
+        </div> -->
+        <!-- <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" 
+          name="email" [(ngModel)]="employee.email">
+        </div> -->
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="email" d="email" 
+          name="email" [(ngModel)]="employee.email">
+        </mat-form-field>
+        <!-- <div class="mb-3">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="text" class="form-control" id="phone" 
+            name="phone" [(ngModel)]="employee.phone" >            
+          </div> -->
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input matInput placeholder="phone" d="phone" 
+            name="phone" [(ngModel)]="employee.phone">
+          </mat-form-field>
+          <!-- <div class="mb-3">
+            <label for="salary" class="form-label">Salary</label>
+            <input type="text" class="form-control" id="salary" 
+            name="salary" [(ngModel)]="employee.salary">            
+          </div> -->
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Salary</mat-label>
+            <input matInput placeholder="salary" id="salary" 
+            name="salary" [(ngModel)]="employee.salary">
+          </mat-form-field>
+          <!-- <div class="mb-3">
+            <label for="department" class="form-label">Dept</label>
+            <input type="text" class="form-control" id="department" 
+            name="department" [(ngModel)]="employee.department">            
+          </div> -->
+          <!-- <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Department Id</mat-label>
+            <input matInput placeholder="department" id="departmentId" 
+            name="departmentId" [(ngModel)]="employee.departmentId">
+          </mat-form-field> -->
+
+          <mat-form-field class="example-full-width" appearance="outline" >
+            <mat-label>Select Dept</mat-label>
+            <mat-select id="departmentId"  
+            name="departmentId" [(ngModel)]="employee.departmentId" >
+              <mat-option *ngFor="let item of departments" [value]="item.id">{{item.name}}</mat-option>
+            </mat-select>
+           
+          </mat-form-field>
+          
+           <!-- <select class="form-select" [(ngModel)]="employee.departmentId">
+            <option>--Select--</option>
+            <option *ngFor="let dep of departments">
+              {{dep.name}}
+            </option>
+          </select> -->
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Department</mat-label>
+            <input matInput placeholder="department" id="departmentName" 
+            name="departmentName"  [(ngModel)]="employee.departmentName">
+          </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" class="mr-5">Submit</button>
+      </form>
+</div>

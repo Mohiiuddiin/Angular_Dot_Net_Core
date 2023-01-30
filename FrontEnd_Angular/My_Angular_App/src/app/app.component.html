@@ -1,0 +1,51 @@
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">My Angular App</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="employees">Employees</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="add-employee">Add New Employee</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav> -->
+
+
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>My First Angular App</span>
+  <span class="example-spacer"></span>
+
+  <button mat-button [matMenuTriggerFor]="Employee">Employee</button>
+  <mat-menu #Employee="matMenu">
+    <button mat-raised-button routerLink="add-employee" routerLinkActive="active-link">Add New Employee</button>
+    <button mat-raised-button routerLink="employees" routerLinkActive="active-link">Employees</button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="Department">Department</button>
+  <mat-menu #Department="matMenu">
+    <button mat-raised-button routerLink="departments" routerLinkActive="active-link">Departments</button>
+    <button mat-raised-button routerLink="add-department" routerLinkActive="active-link">Add New Department</button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="MaterDetails">Mater-Details</button>
+  <mat-menu #MaterDetails="matMenu">
+    <button mat-raised-button routerLink="master-data/create-inv" routerLinkActive="active-link">Create</button>
+    <button mat-raised-button routerLink="master-data" routerLinkActive="active-link">Master Data List</button>
+
+  </mat-menu>
+
+
+
+  <!-- <button mat-raised-button>Add New</button> -->
+  
+</mat-toolbar>
+<router-outlet></router-outlet>

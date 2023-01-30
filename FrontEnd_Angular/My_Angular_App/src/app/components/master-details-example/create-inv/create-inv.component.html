@@ -1,0 +1,132 @@
+<form class="container" [formGroup]="invoiceForm" (ngSubmit)="saveData()">
+    <div class="card" style="margin-top:10px;margin-left:50px;margin-right:50px;">
+        <h3 align="center" style="margin-top: 5px;">{{pagetitle}}</h3>
+        <div class="card-header">
+            <a routerLink="create-inv" class="btn btn-primary">
+                Create  New [+]
+            </a>
+        </div>        
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Inv No</label>
+                        <span class="text-danger">*</span>
+                        <input type="text" formControlName="invoiceNo" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Customer</label>
+                        <span class="text-danger">*</span>
+                        <!-- <input type="text" class="form-control"> -->
+                        <select formControlName="customerId" class="form-control" (change)="onCustomerChange()">
+                            <option *ngFor="let item of masterCustomer" [value]="item.code">
+                                {{item.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Address</label>
+                        <span class="text-danger"></span>
+                        <!-- <input type="text" class="form-control"> -->
+                        <input formControlName="deliveryAddress" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Remarks</label>
+                        <span class="text-danger"></span>
+                        <!-- <input type="text" class="form-control"> -->
+                        <input formControlName="remarks" class="form-control"/>
+                    </div>
+                </div>
+            </div>            
+            <div class="row" style="padding: 10px;">   
+                <table class="table table-bordered" formArrayName="details" >
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <td>SL No.</td>
+                            <td>P Code</td>
+                            <td>Desc</td>
+                            <td>Qty</td>
+                            <td>Price</td>
+                            <td>Total</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of invProducts.controls;let i=index" [formGroupName]="i">
+                            <td>{{i+1}}</td>
+                            <td>
+                                <select class="form-control" (change)="onProductChange(i)" formControlName="pCode">
+                                    <option *ngFor="let item of masterProduct" [value]="item.code">
+                                        {{item.code}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <input class="form-control" formControlName="productName" />
+                            </td>
+                            <td>
+                                <input class="form-control" (change)="onQtyChange(i)" formControlName="qty"  />
+                            </td>
+                            <td>
+                                <input class="form-control" formControlName="salesPrice" />
+                            </td>
+                            <td>
+                                <input class="form-control" formControlName="total" />
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" (click)="remove_this_prod(i)">remove</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                <a (click)="addNewEntry()" class="btn btn-secondary">+</a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>    
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="">Summary Total</label>
+                        <input type="text" formControlName="total" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="">Summary Tax</label>
+                        <input type="text" formControlName="tax" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="">Summary Net Total</label>
+                        <input type="text" formControlName="netTotal" class="form-control">
+                    </div>
+                </div>  
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="">Payment Type</label>
+                        <!-- <input type="text" formControlName="paymentType" class="form-control"> -->
+
+                        <mat-radio-group formControlName="paymentType" class="form-control" aria-label="Select an option">
+                            <mat-radio-button *ngFor="let item of paymentTypes" value="{{item}}">{{item}}</mat-radio-button>                            
+                        </mat-radio-group>                      
+
+                    </div>
+                </div>              
+                <div class="col-lg-12" style="margin-top: 10px;">
+                    <button class="btn btn-dark" type="submit">Save Data</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+</form>
