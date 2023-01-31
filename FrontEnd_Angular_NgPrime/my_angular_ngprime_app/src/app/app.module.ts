@@ -12,6 +12,11 @@ import { EmployeesListComponent } from './components/employees/employees-list/em
 
 import {TableModule} from 'primeng/table';
 import {ButtonModule} from 'primeng/button';
+import {InputTextModule} from 'primeng/inputtext';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import {DropdownModule} from 'primeng/dropdown';
+
+
 
 
 
@@ -28,7 +33,10 @@ import {ButtonModule} from 'primeng/button';
     AppRoutingModule,
     MenubarModule,
     TableModule,
-    ButtonModule
+    ButtonModule,
+    InputTextModule,
+    FormsModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
