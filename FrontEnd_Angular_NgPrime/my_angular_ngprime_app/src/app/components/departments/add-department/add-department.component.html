@@ -1,0 +1,30 @@
+
+
+
+<div class="container my-5">
+    <h1 class="mb-3">
+        Add New
+    </h1>
+    <form #form="ngForm" (ngSubmit)="addDepartmentFunc()">
+      <!-- <p>
+        <mat-toolbar color="primary">
+          <span>ADD</span>
+        </mat-toolbar>
+      </p> -->
+      <h5>Add Employee</h5>
+      <div class="formgrid grid">
+          <!-- <div class="field col">
+              <label for="id">Id</label>
+              <input  [(ngModel)]="employee.id" id="id" name="id" type="text"  disabled="true" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+          </div> -->
+          <div class="field col">
+              <label for="name">Name</label>
+              <input [(ngModel)]="department.name" id="name" name="name" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"  pInputText> 
+          </div>
+          
+      </div>
+      <div class="formgrid grid">
+          <p-button label="Submit" icon="pi pi-check" iconPos="right" type="submit"></p-button>
+      </div>
+    </form>
+</div>

@@ -10,7 +10,14 @@ import { EmployeesService } from 'src/app/services/employees.service';
   templateUrl: './add-employee.component.html',
   styleUrls: ['./add-employee.component.css']
 })
+
 export class AddEmployeeComponent implements OnInit {
+
+
+
+   
+    
+
    employee:Employee = {
       id:'',
       name:'',      
@@ -26,9 +33,12 @@ export class AddEmployeeComponent implements OnInit {
     name:''     
   }
   departments : department[] = [];
+  selectedDept: department = {id:'',name:''};
+
    //ame,email,phone,salary,department
    constructor(private employeeService:EmployeesService,private departmentService:DepartmentsService,private router:Router){
-
+      
+      
    }
 
    ngOnInit(): void{
@@ -38,6 +48,12 @@ export class AddEmployeeComponent implements OnInit {
       {
         //console.log(employees);
         this.departments = departments;
+
+        // this.departments = this.departments.map(x => ({
+        //   id: x.id,
+        //   name: x.name
+        // }));
+        console.log(departments);
         //this.ELEMENT_DATA = employees;
       },
       error:(response) => 

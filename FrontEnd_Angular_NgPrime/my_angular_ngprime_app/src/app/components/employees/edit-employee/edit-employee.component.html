@@ -1,0 +1,68 @@
+<!-- <h1 class="mb-3">
+    
+</h1> -->
+<form #form="ngForm" (ngSubmit)="updateData()">
+  <!-- <p>
+    <mat-toolbar color="primary">
+      <span>ADD</span>
+    </mat-toolbar>
+  </p> -->
+  <div class="card">
+    <h5>EDIT Employee</h5>
+    <div class="formgrid grid">
+        <div class="field col">
+            <label for="id">Id</label>
+            <input  [(ngModel)]="employee.id" id="id" name="id" type="text"  disabled="true" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+        </div>
+        <div class="field col">
+            <label for="name">Name</label>
+            <input [(ngModel)]="employee.name" id="name" name="name" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"  pInputText> 
+        </div>
+        <div class="field col">
+            <label for="email">Email</label>
+            <input  [(ngModel)]="employee.email" id="email" name="email" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+        </div>
+        <div class="field col">
+            <label for="phone">Phone</label>
+            <input [(ngModel)]="employee.phone" id="phone" type="text" name="phone" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+        </div>
+        <div class="field col">
+            <label for="salary">Salary</label>
+            <input [(ngModel)]="employee.salary" id="salary" type="text" name="salary" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+        </div>
+        <!-- <div class="field col">
+            <label for="departmentId">Department</label>
+            <p-dropdown [options]="departments" [(ngModel)]="employee.departmentId" placeholder="Select a Department" name="departmentId" optionLabel="name" optionValue="id" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+
+            </p-dropdown>
+        </div> -->
+        <div class="field col">
+            <label for="departmentId">Department</label>
+            <!-- <p-dropdown [options]="departments" [(ngModel)]="employee.departmentId" placeholder="Select a Department" name="departmentId" optionLabel="name" optionValue="id" 
+            class="w-full text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+            </p-dropdown> -->
+            <select [(ngModel)]="employee.departmentId" id="departmentId" name="departmentId" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" 
+            style="appearance: auto">
+              <option value="">Select Department</option>  
+              <option *ngFor="let dep of departments" value="{{dep.id}}">{{dep.name}}</option>              
+          </select>
+        </div>
+    </div>
+    <div class="formgrid grid">
+        <p-button label="Update" icon="pi pi-check" iconPos="right" type="submit"></p-button>
+        <p-button label="Delete" icon="pi pi-check" iconPos="right" (click)="deleteData(employee.id)"></p-button>
+    </div>
+</div>
+  
+  
+  <!-- <button pButton type="submit" icon="pi pi-check" iconPos="right"></button> -->
+    
+
+
+  
+
+
+
+  
+    <!-- <button mat-raised-button color="primary" type="submit" class="mr-5">Submit</button> -->
+  </form>

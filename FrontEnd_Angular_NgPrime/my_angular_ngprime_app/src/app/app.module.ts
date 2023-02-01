@@ -1,22 +1,32 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { HttpClientModule } from '@angular/common/http';
-
-
+// import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {MenubarModule} from 'primeng/menubar';
 import { AddEmployeeComponent } from './components/employees/add-employee/add-employee.component';
 import { EditEmployeeComponent } from './components/employees/edit-employee/edit-employee.component';
 import { EmployeesListComponent } from './components/employees/employees-list/employees-list.component';
+import { DepartmentsListComponent } from './components/departments/departments-list/departments-list.component';
+import { AddDepartmentComponent } from './components/departments/add-department/add-department.component';
+import {RadioButtonModule} from 'primeng/radiobutton';
+
 
 import {TableModule} from 'primeng/table';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {DropdownModule} from 'primeng/dropdown';
-
-
+import { CreateInvComponent } from './components/master-details-example/create-inv/create-inv.component';
+import {ToastModule} from 'primeng/toast';
+import { ListingComponent } from './components/master-details-example/listing/listing.component';
+import {ToolbarModule} from 'primeng/toolbar';
+import {FieldsetModule} from 'primeng/fieldset';
+import {BadgeModule} from 'primeng/badge';
+import { TagModule } from 'primeng/tag';
 
 
 
@@ -26,17 +36,31 @@ import {DropdownModule} from 'primeng/dropdown';
     AppComponent,
     AddEmployeeComponent,
     EditEmployeeComponent,
-    EmployeesListComponent
+    EmployeesListComponent,
+    DepartmentsListComponent,
+    AddDepartmentComponent,
+    CreateInvComponent,
+    // ListingComponent,
+    CreateInvComponent,
+    ListingComponent
   ],
   imports: [
-    BrowserModule,HttpClientModule,
+    BrowserModule,BrowserAnimationsModule,HttpClientModule,
     AppRoutingModule,
     MenubarModule,
     TableModule,
     ButtonModule,
     InputTextModule,
     FormsModule,
-    DropdownModule
+    DropdownModule,
+    ReactiveFormsModule,
+    ToastModule,
+    ToolbarModule,
+    FieldsetModule,
+    BadgeModule,
+    TagModule,
+    RadioButtonModule
+    // ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

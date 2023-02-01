@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+.p-fieldset-legend {
+    font-size: 20px;
+}
+  
+.p-fieldset-content {
+    color: black;
+    border: 2px dimgray solid;
+    background-color: whitesmoke;
+
+}

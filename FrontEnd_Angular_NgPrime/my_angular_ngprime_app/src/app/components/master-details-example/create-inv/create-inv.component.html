@@ -1,0 +1,257 @@
+<!-- <p-toast></p-toast> -->
+<!-- <p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast> -->
+<!-- <p-toast position="bottom-center" key="bc"></p-toast> -->
+
+<!-- <p-toast position="bottom-center" key="c" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="flex flex-column" style="flex: 1">
+            <div class="text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="grid p-fluid">
+                <div class="col-6">
+                    <button type="button" pButton label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="col-6">
+                    <button type="button" pButton label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast> -->
+
+
+<form style="margin-left: 10%;margin-right: 10%;margin-top: 10px;" [formGroup]="invoiceForm" (ngSubmit)="saveData()">
+
+    <div class="card">
+        <!-- <div class="flex flex-wrap card-container blue-container" style="max-width: 100%"> -->
+            <div class="flex align-items-center justify-content-center bg-blue-500 font-bold text-white m-2 border-round" style="min-width: 200px; min-height: 100%">
+                <h3>Create Master-Details Entry</h3>
+            </div>
+            
+        <!-- </div> -->
+    </div>
+      
+      <br/>
+      <br/>
+      <!-- <div class="formgrid grid"> -->   
+      <!-- </div> -->    
+    
+    <p-fieldset  style="padding: 0;" legend="Basic Information" [toggleable]="true">
+        <!-- <div class="surface-100" style="margin: 0px;"> -->
+            <div class="formgrid grid ">
+                <!-- <div class="field col">
+                    <label for="id">Id</label>
+                    <input  [(ngModel)]="employee.id" id="id" name="id" type="text"  disabled="true" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+                </div> -->
+                <div class="field col">
+                  <label for="invoiceNo"><p-tag styleClass="mr-2" severity="primary" value="Inv No"></p-tag>
+                  </label>
+                  <span class="text-danger">*</span>
+                  <input formControlName="invoiceNo" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"  pInputText> 
+                </div>
+                <div class="field col">
+                    <label for="remarks"><p-tag styleClass="mr-2" severity="primary" value="Remarks"></p-tag></label>
+                    <span class="text-danger">*</span>
+                    <input  formControlName="remarks" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+                </div>          
+            </div>
+            <div class="formgrid grid">
+              <div class="field col">
+                  <label for="departmentId"><p-tag styleClass="mr-2" severity="primary" value="Customer"></p-tag></label>
+                  <!-- <p-dropdown [options]="departments" [(ngModel)]="employee.departmentId" placeholder="Select a Department" name="departmentId" optionLabel="name" optionValue="id" 
+                  class="w-full text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
+                  </p-dropdown> -->
+                  <select (change)="onCustomerChange()" formControlName="customerId" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" 
+                  style="appearance: auto">
+                    <!-- <option value="">Select Customer</option>   -->
+                    <span class="text-danger">*</span>
+                    <option *ngFor="let item of masterCustomer" [value]="item.code">
+                      {{item.name}}
+                  </option>             
+                </select>
+              </div>
+              <div class="field col">
+                  <label for="deliveryAddress"><p-tag styleClass="mr-2" severity="primary" value="Address"></p-tag></label>
+                  <span class="text-danger">*</span>
+                  <input formControlName="deliveryAddress" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+              </div>       
+              
+            </div>
+        <!-- </div> -->
+       
+    </p-fieldset>
+    
+        <br/>
+        <p-fieldset legend="Product Information" [toggleable]="true">
+            <!-- <p-toolbar styleClass="mb-4 gap-2">
+
+               
+                <ng-template pTemplate="right">
+                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="addNewEntry()"></button>
+            </ng-template>
+        
+            
+            </p-toolbar> -->
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="addNewEntry()"></button>
+            <br/>
+            <br/>
+            <p-table [value]="invProducts.controls" styleClass="" [tableStyle]="{'min-width': ''}">                  
+                <ng-template pTemplate="header" >  
+                    <tr style="font-weight: bold;color: azure;background-color: black;border: 1;">  
+                        <ng-container>  
+                            <td>SL No.</td>
+                            <td>P Code</td>
+                            <td>Desc</td>
+                            <td>Qty</td>
+                            <td>Price</td>
+                            <td>Total</td>
+                            <td>Action</td> 
+                        </ng-container>  
+                    </tr>  
+                </ng-template>              
+                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">  
+                    <ng-container formArrayName="details">  
+                        <tr [formGroupName]="rowIndex">  
+                            <td>  
+                                <p-badge value="{{rowIndex+1}}"></p-badge>
+                            </td>  
+                            <td>  
+                                <select class="form-control" (change)="onProductChange(rowIndex)" formControlName="pCode" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" 
+                                style="appearance: auto">
+                                    <option *ngFor="let item of masterProduct" [value]="item.code">
+                                        {{item.code}}
+                                    </option>
+                                </select>
+                               
+                            </td>  
+                            <td>  
+                                <input class="form-control" formControlName="productName" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText>
+                               
+                            </td>  
+                            <td>  
+                                <input class="form-control" (change)="onQtyChange(rowIndex)" formControlName="qty"  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText>
+    
+                               
+                            </td>  
+                            <td>  
+                                <input class="form-control" formControlName="salesPrice"  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText>
+                                   
+                            </td>  
+                            <td>  
+                                <input class="form-control" formControlName="total" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText>
+    
+                            </td>  
+                            <td>  
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="remove_this_prod(rowIndex)"></button>    
+                            </td>  
+                        </tr>  
+                    </ng-container>  
+                </ng-template> 
+                <ng-template pTemplate="summary">
+                    <p align="center" *ngIf="!invProducts.controls || invProducts.controls.length<=0">No Products Added To List</p>
+                    <p align="center" *ngIf="!invProducts.controls || invProducts.controls.length>0">{{invProducts.controls.length}} Item Added To List</p>
+                </ng-template>                 
+            </p-table>
+        </p-fieldset>
+
+        <br/>
+        
+        
+    <!-- <div class="card-footer">  
+        <a pButton pRipple type="button" (click)="addNewEntry()" label="+" class="p-button-raised p-button-secondary"></a>
+    </div>   -->
+    
+       <!-- <table class="" formArrayName="details" >
+        <thead class="">
+            <tr>
+                <td>SL No.</td>
+                <td>P Code</td>
+                <td>Desc</td>
+                <td>Qty</td>
+                <td>Price</td>
+                <td>Total</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of invProducts.controls;let i=index" [formGroupName]="i">
+                <td>{{i+1}}</td>
+                <td>
+                    <select class="form-control" (change)="onProductChange(i)" formControlName="pCode" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" 
+                    style="appearance: auto">
+                        <option *ngFor="let item of masterProduct" [value]="item.code">
+                            {{item.code}}
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    <input class="form-control" formControlName="productName" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText>
+                </td>
+                <td>
+                    <input class="form-control" (change)="onQtyChange(i)" formControlName="qty"  type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText>
+                </td>
+                <td>
+                    <input class="form-control" formControlName="salesPrice" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText>
+                </td>
+                <td>
+                    <input class="form-control" formControlName="total" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText>
+                </td>
+                <td>
+                     
+                    <a pButton pRipple type="button" (click)="remove_this_prod(i)" label="Remove" class="p-button-raised p-button-danger"></a>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">
+
+                    <a pButton pRipple type="button" (click)="addNewEntry()" label="+" class="p-button-raised p-button-secondary"></a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>  -->
+    <p-fieldset legend="summary Information" [toggleable]="true">
+        <div class="formgrid grid">
+            <!-- <div class="field col">
+                <label for="id">Id</label>
+                <input  [(ngModel)]="employee.id" id="id" name="id" type="text"  disabled="true" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+            </div> -->
+            <div class="field col">
+              <label for="total"><p-tag styleClass="mr-2" severity="primary" value="Total"></p-tag>Total</label>
+              <span class="text-danger">*</span>
+              <input formControlName="total" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"  pInputText> 
+            </div>
+            <div class="field col">
+                <label for="tax"><p-tag styleClass="mr-2" severity="primary" value="Tax"></p-tag>Tax</label>
+                <span class="text-danger">*</span>
+                <input  formControlName="tax" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+            </div>  
+            <div class="field col">
+                <label for="netTotal"><p-tag styleClass="mr-2" severity="primary" value="Net Total"></p-tag></label>
+                <span class="text-danger">*</span>
+                <input  formControlName="netTotal" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+            </div>         
+        </div>
+        <div class="formgrid grid">
+            <!-- <mat-radio-group formControlName="paymentType" class="form-control" aria-label="Select an option">
+                <mat-radio-button *ngFor="let item of paymentTypes" value="{{item}}">{{item}}</mat-radio-button>                            
+            </mat-radio-group>  -->
+            <div *ngFor="let item of paymentTypes" class="field-checkbox">
+                <p-radioButton [inputId]="item.paymentType" formControlName="paymentType" [value]="item" ></p-radioButton>
+                <label [for]="item">{{item}}</label>
+            </div>    
+        </div>
+    </p-fieldset>
+    
+    <br/>
+     <div class="formgrid grid" style="margin-left: 5px;">
+          <p-button label="Submit" icon="pi pi-check" iconPos="right" type="submit"></p-button>
+    </div>
+     
+</form>
+

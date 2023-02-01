@@ -5,6 +5,8 @@ import { DepartmentsListComponent } from './components/departments/departments-l
 import { AddEmployeeComponent } from './components/employees/add-employee/add-employee.component';
 import { EditEmployeeComponent } from './components/employees/edit-employee/edit-employee.component';
 import { EmployeesListComponent } from './components/employees/employees-list/employees-list.component';
+import { CreateInvComponent } from './components/master-details-example/create-inv/create-inv.component';
+import { ListingComponent } from './components/master-details-example/listing/listing.component';
 
 const routes: Routes = [
   {
@@ -28,6 +30,16 @@ const routes: Routes = [
   },{
     path:'departments',
     component : DepartmentsListComponent
+  },{
+    path:'master-data',
+    component : ListingComponent
+  },
+  {
+    path:'master-data/create-inv',
+    component : CreateInvComponent
+  },{
+    path:'master-data/edit-inv/:invNo',
+    component : CreateInvComponent
   }
 ];
 

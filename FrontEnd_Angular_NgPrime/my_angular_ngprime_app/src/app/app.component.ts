@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, SelectItem, SelectItemGroup } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +7,10 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+    
+
+    //////
   title = 'my_angular_ngprime_app';
 
   items: MenuItem[] = [];
@@ -46,16 +50,18 @@ export class AppComponent {
                 ]
             },
             {
-                label:'Edit',
+                label:'Departments',
                 icon:'pi pi-fw pi-pencil',
                 items:[
                     {
-                        label:'Left',
-                        icon:'pi pi-fw pi-align-left'
+                        label:'List',
+                        icon:'pi pi-fw pi-align-left',
+                        routerLink: ["departments"]
                     },
                     {
-                        label:'Right',
-                        icon:'pi pi-fw pi-align-right'
+                        label:'Add',
+                        icon:'pi pi-fw pi-align-left',
+                        routerLink: ["add-department"]
                     },
                     {
                         label:'Center',
@@ -69,17 +75,44 @@ export class AppComponent {
                 ]
             },
             {
-                label:'Users',
+                label:'Departments',
+                icon:'pi pi-fw pi-pencil',
+                items:[
+                    {
+                        label:'List',
+                        icon:'pi pi-fw pi-align-left',
+                        routerLink: ["departments"]
+                    },
+                    {
+                        label:'Add',
+                        icon:'pi pi-fw pi-align-left',
+                        routerLink: ["add-department"]
+                    },
+                    {
+                        label:'Center',
+                        icon:'pi pi-fw pi-align-center'
+                    },
+                    {
+                        label:'Justify',
+                        icon:'pi pi-fw pi-align-justify'
+                    },
+
+                ]
+            },
+            {
+                label:'Master-Data',
                 icon:'pi pi-fw pi-user',
                 items:[
                     {
-                        label:'New',
+                        label:'List',
                         icon:'pi pi-fw pi-user-plus',
+                        routerLink: ["master-data"]
 
                     },
                     {
-                        label:'Delete',
+                        label:'Add',
                         icon:'pi pi-fw pi-user-minus',
+                        routerLink: ["master-data/create-inv"]
 
                     },
                     {
