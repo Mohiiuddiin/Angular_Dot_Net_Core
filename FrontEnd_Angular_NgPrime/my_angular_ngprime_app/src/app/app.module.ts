@@ -14,6 +14,8 @@ import { EmployeesListComponent } from './components/employees/employees-list/em
 import { DepartmentsListComponent } from './components/departments/departments-list/departments-list.component';
 import { AddDepartmentComponent } from './components/departments/add-department/add-department.component';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+
 
 
 import {TableModule} from 'primeng/table';
@@ -27,6 +29,12 @@ import {ToolbarModule} from 'primeng/toolbar';
 import {FieldsetModule} from 'primeng/fieldset';
 import {BadgeModule} from 'primeng/badge';
 import { TagModule } from 'primeng/tag';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {CheckboxModule} from 'primeng/checkbox';
+import {SelectButtonModule} from 'primeng/selectbutton';
+import {SliderModule} from 'primeng/slider';
+import {CalendarModule} from 'primeng/calendar';
+
 
 
 
@@ -59,7 +67,13 @@ import { TagModule } from 'primeng/tag';
     FieldsetModule,
     BadgeModule,
     TagModule,
-    RadioButtonModule
+    RadioButtonModule,
+    AutoCompleteModule,
+    CheckboxModule,
+    SelectButtonModule,
+    InputTextareaModule,
+    SliderModule,
+    CalendarModule
     // ToastrModule.forRoot()
   ],
   providers: [],

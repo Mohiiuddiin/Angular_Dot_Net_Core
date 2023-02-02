@@ -21,7 +21,14 @@ export class MasterDetailsService {
   }
 
   getCustomersByCode(code:any){
-    return this.htttp.get(this.baseApiUrl+'/api/Customer/GetByCode/'+code);
+
+    if(typeof(code)=="object"){
+      return this.htttp.get(this.baseApiUrl+'/api/Customer/GetByCode/'+code.code);
+    }else{
+      return this.htttp.get(this.baseApiUrl+'/api/Customer/GetByCode/'+code);
+    }
+   
+    
   }
 
   getProductByCode(code:any){
@@ -29,6 +36,11 @@ export class MasterDetailsService {
   }  
 
   SaveData(invoicedata:any){
+
+    if(typeof(invoicedata.customerId)=="object"){
+      invoicedata.customerId = invoicedata.customerId.code;
+    }
+    
     return this.htttp.post(this.baseApiUrl+'/api/MasterDetails/',invoicedata);
   }
 

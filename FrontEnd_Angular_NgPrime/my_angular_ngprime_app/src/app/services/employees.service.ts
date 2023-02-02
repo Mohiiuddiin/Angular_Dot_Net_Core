@@ -22,7 +22,8 @@ export class EmployeesService {
     return this.htttp.get<Employee>(this.baseApiUrl+'/api/Employee/'+id);
   }
 
-  add(addEmployeeRequest:Employee):Observable<Employee>{
+  add(addEmployeeRequest:any):Observable<Employee>{
+    addEmployeeRequest.city = addEmployeeRequest.city.label;
     addEmployeeRequest.id='00000000-0000-0000-0000-000000000000';
     console.log(addEmployeeRequest);
     return this.htttp.post<Employee>(this.baseApiUrl+'/api/Employee',addEmployeeRequest)
@@ -34,6 +35,15 @@ export class EmployeesService {
 
   delete(id:string):Observable<Employee>{
     return this.htttp.delete<Employee>(this.baseApiUrl+'/api/Employee/'+id);
+  }
+
+  getCountries() {
+    // return this.htttp.get('showcase/resources/data/countries.json')
+    //             .toPromise()
+    //             .then(res => {
+    //               return <any[]>res?.json().data;
+    //             })
+    //             .then(data => { return data; });
   }
 
 }

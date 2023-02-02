@@ -6,6 +6,13 @@ export interface Employee{
     salary:string,
     departmentId:string,
     departmentName:string
+    city: string,
+    age: number,
+    gender: string,
+    employeeStatus: string,
+    address: string,
+    dateOfBirth:string
+
 }
 
 //name,email,phone,salary,department

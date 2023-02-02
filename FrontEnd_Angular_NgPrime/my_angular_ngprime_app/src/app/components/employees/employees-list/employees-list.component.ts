@@ -57,6 +57,7 @@ export class EmployeesListComponent implements OnInit {
     });
   }
 
+  
   displayedColumns: string[] = ['id','name', 'email','phone','salary', 'departmentName','Action'];
   
 }

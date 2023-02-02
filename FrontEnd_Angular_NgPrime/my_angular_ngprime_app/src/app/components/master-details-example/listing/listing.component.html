@@ -1,4 +1,23 @@
-
+<p-toast position="top-center" value="" key="key" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="flex flex-column" style="flex: 1">
+            <div class="text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="grid p-fluid">
+                <div class="col-6">
+                    <button type="button" pButton (click)="removeMasterData(invno)" label="Ok" class="p-button-success"></button>
+                </div>
+                <div class="col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+                
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
 
 
 <div class="card" style="margin-left: 10%;margin-right: 10%;">
@@ -17,6 +36,7 @@
 
 <p-table [value]="master_data_list" header="List of Master Data" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
 
+    
   <ng-template pTemplate="header">
       <tr>
           <th>Invoice No</th>
@@ -29,6 +49,7 @@
       </tr>
   </ng-template>
   <ng-template pTemplate="body" let-item>
+        
       <tr>
           <td>{{item.invoiceNo}}</td>   
           <td>{{item.customerName}}</td>   
@@ -41,13 +62,8 @@
               <!-- <a [routerLink]="['edit',item.id]" pButton pRipple type="button" label="EDIT/Delete" class="p-button-raised p-button-secondary"></a>
 
               <button mat-raised-button color="warn" (click)="removeMasterData(item.invoiceNo)">Delete</button> -->
-
-              <a pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['edit-inv',item.invoiceNo]"></a>    
-
-              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="removeMasterData(item.invoiceNo)"></button>    
-
-
-  
+              <a pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['edit-inv',item.invoiceNo]"></a>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="askToDelete(item.invoiceNo)"></button>
           </td>    
       </tr>
   </ng-template>
@@ -56,4 +72,4 @@
   <!-- </div> -->
 </div>
 
-
+<p *ngIf="!master_data_list|| master_data_list.length<=0">No Employees Found</p>

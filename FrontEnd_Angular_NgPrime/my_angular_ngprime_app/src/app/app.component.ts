@@ -75,18 +75,18 @@ export class AppComponent {
                 ]
             },
             {
-                label:'Departments',
+                label:'Employee',
                 icon:'pi pi-fw pi-pencil',
                 items:[
                     {
                         label:'List',
                         icon:'pi pi-fw pi-align-left',
-                        routerLink: ["departments"]
+                        routerLink: ["employees"]
                     },
                     {
                         label:'Add',
                         icon:'pi pi-fw pi-align-left',
-                        routerLink: ["add-department"]
+                        routerLink: ["add-employee"]
                     },
                     {
                         label:'Center',

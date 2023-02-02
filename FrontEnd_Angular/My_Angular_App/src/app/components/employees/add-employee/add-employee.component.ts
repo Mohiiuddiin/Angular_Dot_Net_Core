@@ -26,6 +26,7 @@ export class AddEmployeeComponent implements OnInit {
     name:''     
   }
   departments : department[] = [];
+  
    //ame,email,phone,salary,department
    constructor(private employeeService:EmployeesService,private departmentService:DepartmentsService,private router:Router){
 

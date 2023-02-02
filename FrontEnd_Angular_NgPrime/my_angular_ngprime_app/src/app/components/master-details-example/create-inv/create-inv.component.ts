@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators,FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MasterDetailsService } from 'src/app/services/master-details.service';
-import {MessageService, PrimeNGConfig} from 'primeng/api';
+import {FilterService, MessageService, PrimeNGConfig} from 'primeng/api';
 
 
 @Component({
@@ -24,11 +24,12 @@ export class CreateInvComponent implements OnInit {
   editinvoiceno: any;
   masterDataInfoToEdit:any;
   masterDetailsDataInfoToEdit:any;
+  messagetype:any;
   /**
    *
    */
-  constructor(private builder:FormBuilder,private router:Router,private master_service: MasterDetailsService, private alert: MessageService,
-    private active_route:ActivatedRoute, private primengConfig: PrimeNGConfig) {  
+  constructor(private builder:FormBuilder,private router:Router,private master_service: MasterDetailsService, private messageService: MessageService,
+    private active_route:ActivatedRoute, private primengConfig: PrimeNGConfig, private filterService: FilterService) {  
   }
 
   
@@ -45,8 +46,7 @@ export class CreateInvComponent implements OnInit {
       this.isedit = true;
       this.pagetitle = "Edit Invoice";
       this.InfoForMasterDetEdit(this.editinvoiceno);
-    }
-    
+    }    
   }
   
   invoiceForm = this.builder.group({
@@ -74,6 +74,7 @@ export class CreateInvComponent implements OnInit {
   saveData(){
     //console.log(this.invoiceForm.value);
     if (this.invoiceForm.valid) {
+      console.log(this.invoiceForm.getRawValue());
       this.master_service.SaveData(this.invoiceForm.getRawValue()).subscribe(res => {
         let result: any;
         result = res;
@@ -82,21 +83,48 @@ export class CreateInvComponent implements OnInit {
            
           if(this.isedit){
             // this.alert.success('Updated Successfully.', 'Invoice :' + result.keyVal);
+            this.messageService.add({key: 'key',severity: 'success',summary: 'updated successfully', detail: 'Invoice :' + result.keyVal});
+            
+            this.messagetype = "success";
           }else{
           // this.alert.success('Created Successfully.', 'Invoice :' + result.keyVal);
-          this.alert.add({severity:'success', summary: 'Success', detail: 'Invoice :' + result.keyVal});
+          // this.alert.add({severity:'success', summary: 'Success', detail: 'Invoice :' + result.keyVal});
+          this.messageService.add({key: 'key',severity: 'success',summary: 'Saved Successfully', detail: 'Invoice :' + result.keyVal});
+          this.messagetype = "success";
+
           }
-          this.router.navigate(['master-data/']);
+          // this.router.navigate(['master-data/']);
         } else {
           // this.alert.error('Failed to save.', 'Invoice');
+          this.messageService.add({key: 'key',severity: 'error',summary: 'Failed to save', detail: 'Invoice :' + result.keyVal});
+          this.messagetype = "error";
+
         }
       });
     } else {
       // this.alert.warning('Please enter values in all mandatory filed', 'Validation');
+      this.messageService.add({key: 'key',severity: 'error',summary: 'Please enter values in all mandatory filed', detail: 'Validation'});
+      this.messagetype = "error";
+
     }
   }
+  onConfirm() {
+    this.messageService.clear('key');
+    this.router.navigate(['master-data/']);
+  }
 
+  onReject(messagetype:string) {
 
+    // console.log(messagetype+","+this.messagetype);
+      this.messageService.clear('key');
+      if(messagetype=="success"){
+        this.router.navigate(['master-data/']);
+      }
+      // this.router.navigate(['master-data/']);
+  }
+  clear() {
+    this.messageService.clear();
+  }
   InfoForMasterDetEdit(invNo: any){
     //console.log('master: '+invNo)
     this.master_service.GetMasterDetailByInv(invNo).subscribe(res=>{
@@ -113,6 +141,14 @@ export class CreateInvComponent implements OnInit {
     this.master_service.GetMasterDataByInv(invNo).subscribe(res=>{
       this.masterDataInfoToEdit = res;
 
+      // if(typeof(this.masterDataInfoToEdit.customerId)=="object"){
+      //   this.master_service.getCustomersByCode(this.masterDataInfoToEdit.customerId).subscribe(res=>{    
+        
+      //     this.masterDetailsDataInfoToEdit.customerId = res;
+      //     // console.log(this.masterDetailsDataInfoToEdit.customerId);
+         
+      //   });
+      // }    
       
       if (this.masterDataInfoToEdit != null) {
         this.invoiceForm.setValue({
@@ -121,7 +157,6 @@ export class CreateInvComponent implements OnInit {
           total: this.masterDataInfoToEdit.total, tax: this.masterDataInfoToEdit.tax, netTotal: this.masterDataInfoToEdit.netTotal,paymentType:this.masterDataInfoToEdit.paymentType, details: this.masterDetailsDataInfoToEdit
         });       
       };
-
     });
     console.log(this.invoiceForm.get('paymentType'));
   }
@@ -141,7 +176,22 @@ export class CreateInvComponent implements OnInit {
   get invProducts(){
     return this.invoiceForm.get("details") as FormArray;
   }
+    filterCountry(event:any) {
+      //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+      let filtered : any[] = [];
+      let query = event.query;
+      console.log(query);
+      console.log(event);
 
+      for(let i = 0; i < this.masterCustomer.length; i++) {
+          let cust = this.masterCustomer[i];
+          if (cust.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+              filtered.push(cust);
+          }
+      }
+
+      this.masterCustomer = filtered;
+  }
   generateRow(){
     return this.builder.group({
         id:this.builder.control(0),
@@ -222,13 +272,18 @@ export class CreateInvComponent implements OnInit {
   }
 
   onCustomerChange(){
-    let customercode = this.invoiceForm.get("customerId")?.value;
+    console.log("hello");
+    var customercode = this.invoiceForm.get("customerId")?.value;
+    
+    console.log(typeof(customercode));
+    
     this.master_service.getCustomersByCode(customercode).subscribe(res => {
       let custdata: any;
       custdata = res;
       if (custdata != null) {
         this.invoiceForm.get("deliveryAddress")?.setValue(custdata.address + ',' + custdata.phoneno + ',' + custdata.email);
         this.invoiceForm.get("customerName")?.setValue(custdata.name);
+        
       }
     });
   }
