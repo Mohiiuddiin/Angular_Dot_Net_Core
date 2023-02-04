@@ -17,6 +17,10 @@ export class EditEmployeeComponent implements OnInit {
   filteredGroups: any[]= [];
   stateOptions: any[] = [];
   genders : any[] = [];  
+  department:department = {
+    id:'',
+    name:''     
+  }
     employee:Employee = {
       id:'',
       name:'',      
@@ -33,10 +37,7 @@ export class EditEmployeeComponent implements OnInit {
       dateOfBirth:'',
 
   }
-  department:department = {
-    id:'',
-    name:''     
-  }
+  
   departments : department[] = [];
    //ame,email,phone,salary,department
    constructor(private route:ActivatedRoute,private departmentService:DepartmentsService

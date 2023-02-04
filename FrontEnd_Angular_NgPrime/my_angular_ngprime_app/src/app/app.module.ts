@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 // import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule,FormControl } from '@angular/forms';
 import {MenubarModule} from 'primeng/menubar';
 import { AddEmployeeComponent } from './components/employees/add-employee/add-employee.component';
 import { EditEmployeeComponent } from './components/employees/edit-employee/edit-employee.component';
@@ -34,8 +34,8 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {SliderModule} from 'primeng/slider';
 import {CalendarModule} from 'primeng/calendar';
-
-
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 
 
@@ -50,7 +50,8 @@ import {CalendarModule} from 'primeng/calendar';
     CreateInvComponent,
     // ListingComponent,
     CreateInvComponent,
-    ListingComponent
+    ListingComponent,
+
   ],
   imports: [
     BrowserModule,BrowserAnimationsModule,HttpClientModule,
@@ -74,6 +75,9 @@ import {CalendarModule} from 'primeng/calendar';
     InputTextareaModule,
     SliderModule,
     CalendarModule
+    ,ConfirmDialogModule,
+    MultiSelectModule
+
     // ToastrModule.forRoot()
   ],
   providers: [],

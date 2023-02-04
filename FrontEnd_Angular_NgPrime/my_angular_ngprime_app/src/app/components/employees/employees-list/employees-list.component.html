@@ -1,10 +1,9 @@
 
 
-<p-table [value]="employees" header="List of Employees" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+<!-- <p-table [value]="employees" header="List of Employees" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
     <ng-template pTemplate="caption">
         <div class="flex align-items-center justify-content-between">
             List of Employees
-            <!-- <p-button icon="pi pi-refresh"></p-button> -->
         </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -27,12 +26,114 @@
             <td>{{employee.salary}}</td> 
             <td>{{employee.departmentName}}</td>   
             <td>
-                <!-- <a [routerLink]="['edit',employee.id]" >EDIT/Delete</a>       -->
                 <a [routerLink]="['edit',employee.id]" pButton pRipple type="button" label="EDIT/Delete" class="p-button-raised p-button-secondary"></a>
     
             </td>    
         </tr>
     </ng-template>
-</p-table>
+</p-table> -->
 
 <p *ngIf="!employees|| employees.length<=0">No Employees Found</p>
+
+
+
+
+<div class="card" style="margin-left: 10%;margin-right: 10%;">
+    <!-- <h5>Filter Menu</h5>
+    <p>Filters are displayed in an overlay.</p> -->
+    <p-table #dt1 [value]="employees" dataKey="id"
+        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['name','email','phone','salary','departmentName']">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="min-width:15rem">
+                    <div class="flex justify-content-center align-items-center">
+                        Id
+                        <p-columnFilter type="text" field="id" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:15rem">
+                    <div class="flex justify-content-center align-items-center">
+                        Name
+                        <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:15rem">
+                    <div class="flex justify-content-center align-items-center">
+                        Email
+                        <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex justify-content-center align-items-center">
+                        Phone
+                        <p-columnFilter type="text" field="phone" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex justify-content-center align-items-center">
+                        Salary
+                        <p-columnFilter type="text" field="salary" display="menu" ></p-columnFilter>
+                    </div>
+                </th>
+                <th style="width: 3rem">
+                    <div class="flex justify-content-center align-items-center">
+                        Department
+                        <p-columnFilter type="text" field="departmentName" display="menu" ></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:10rem">
+                    <div class="flex justify-content-center align-items-center">
+                        Action
+                        <p-columnFilter type="text" field="Action" display="menu" ></p-columnFilter>
+
+                    </div>
+                </th>
+                
+               
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customer>
+            <tr>
+                <td>
+                    {{customer.id}}
+                </td>
+                <td>
+                    {{customer.name}}
+                </td>
+                <td>
+                   {{customer.email}}
+                </td>
+                <td>
+                    {{customer.phone}}
+                 </td>
+                <td>
+                    {{customer.salary}}
+                </td>
+                <td>
+                    {{customer.departmentName}}
+                </td>
+                <td>
+                    <a [routerLink]="['edit',customer.id]" pButton pRipple type="button" label="EDIT/Delete" class="p-button-raised p-button-secondary"></a>
+                </td>
+                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="7">No customers found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

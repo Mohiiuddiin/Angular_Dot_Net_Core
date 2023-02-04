@@ -1,106 +1,127 @@
+<p-toast position="top-center" key="key" (onClose)="onReject(messagetype)" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+      <div class="flex flex-column" style="flex: 1">
+          <div class="text-center">
+              <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+              <h4>{{message.summary}}</h4>
+              <p>{{message.detail}}</p>
+          </div>
+          <div  class="grid p-fluid"> 
+            <!-- *ngIf="message.severity=='success'" -->
+              <div class="col-6">
+                  <button type="button" pButton (click)="onConfirm()" label="Ok" class="p-button-success"></button>
+              </div>
+              <div *ngIf="message.severity!='success'" class="col-6">
+                  <button type="button" pButton (click)="onReject(messagetype)" label="No" class="p-button-secondary"></button>
+              </div>
+              <div *ngIf="message.severity=='success'" class="col-6">
+                  <button type="button" pButton (click)="onConfirm()" label="No" class="p-button-secondary"></button>
+              </div>
+          </div>
+      </div>
+  </ng-template>
+</p-toast>
 <div class="container my-5">
     
     <form #form="ngForm" (ngSubmit)="addEmployeeFunc()" style="margin-left: 20%;margin-right: 20%;">
         <div class="card">
-            <!-- <div class="flex flex-wrap card-container blue-container" style="max-width: 100%"> -->
                 <div class="flex align-items-center justify-content-center bg-blue-500 font-bold text-white m-2 border-round" style="min-width: 200px; min-height: 100%">
                     <h3>Add New Employee</h3>
                 </div>
-                
-            <!-- </div> -->
-        </div>
+          <br/>
+          <br/>         
           
-          <br/>
-          <br/>
-      <!-- <p>
-        <mat-toolbar color="primary">
-          <span>ADD</span>
-        </mat-toolbar>
-      </p> -->
-     
+
       <div class="formgrid grid">
         <div class="field col">
-            <label for="name">Name</label>
+            <label for="name" style="font-weight: bold;">Name</label>
             <input [(ngModel)]="employee.name" id="name" name="name" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"  pInputText> 
-        </div>
+            
+          </div>
         <div class="field col">
-            <label for="email">Email</label>
+            <label for="email" style="font-weight: bold;">Email</label>
             <input  [(ngModel)]="employee.email" id="email" name="email" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
         </div>
       </div>
       <div class="formgrid grid">
         <div class="field col">
-            <label for="phone">Phone</label>
+            <label for="phone" style="font-weight: bold;">Phone</label>
             <input [(ngModel)]="employee.phone" id="phone" type="text" name="phone" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
         </div>
         <div class="field col">
-            <label for="salary">Salary</label>
+            <label for="salary" style="font-weight: bold;">Salary</label>
             <input [(ngModel)]="employee.salary" id="salary" type="text" name="salary" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
         </div>
       </div>
-      <div class="formgrid grid">
-        <div class="field col">
-            <label for="departmentId">Department</label>
-            <!-- <p-dropdown [options]="departments" [(ngModel)]="employee.departmentId" placeholder="Select a Department" name="departmentId" optionLabel="name" optionValue="id" 
-            class="w-full text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" style="appearance: auto">
-            </p-dropdown> -->
-            <select [(ngModel)]="employee.departmentId" id="departmentId" name="departmentId" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" 
+      <div class="p-fluid grid formgrid">
+        <div class="field col-12 md:col-6">
+            <label for="departmentId" style="font-weight: bold;">Department</label>
+           
+            <!-- <select [(ngModel)]="employee.departmentId" id="departmentId" name="departmentId" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" 
             style="appearance: auto">
               <option value="">Select Department</option>  
               <option *ngFor="let dep of departments" value="{{dep.id}}">{{dep.name}}</option>              
-          </select>
+          </select> -->
+
+
+          <p-dropdown [options]="departments" id="departmentId" name="departmentId" [(ngModel)]="department" optionLabel="name" [filter]="true" filterBy="name"  placeholder="Select a Department">
+            <ng-template pTemplate="selectedItem">
+                <div class="dept-item dept-item-value" *ngIf="department">
+                    <!-- <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + employee.id.toLowerCase()" /> -->
+                    <div>{{department.name}}</div>
+                </div>
+            </ng-template>
+            <ng-template let-dept pTemplate="item">
+                <div class="dept-item">
+                    <!-- <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + dept.id.toLowerCase()" /> -->
+                    <div>{{dept.name}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+    
         </div>
-        <div class="field col ">
-            <label for="gender">Gender</label>
-            <div class="flex flex-nowrap overflow-hidden card-container">
+        <div class="field col-12 md:col-6">
+            <label for="gender" style="font-weight: bold;">Gender</label>            
+            <div class="flex flex-nowrap  card-container"> 
+              <!-- overflow-hidden -->
                 <div *ngFor="let item of genders" class="field-checkbox">
                     <p-radioButton [inputId]="item.gender" [(ngModel)]="employee.gender" [value]="item" id="gender" name="gender" ></p-radioButton>
                     <label [for]="item">{{item}}</label>&nbsp;&nbsp;&nbsp;
                 </div>   
             </div>
              
-            <!-- <input [(ngModel)]="employee.gender" id="gender" type="text" name="gender" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText>  -->
           </div>
       </div>
       <div class="formgrid grid">
         <div class="field col">
-            <label for="age">Age</label>
-            <!-- <input type="text" pInputText [(ngModel)]="employee.age" id="age" name="age" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" />
-            <p-slider [(ngModel)]="employee.age"></p-slider> -->
+            <label for="age" style="font-weight: bold;">Age</label>            
             <input  [(ngModel)]="employee.age" id="age" name="age" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
           </div>
         <div class="field col">
-            <label for="employeeStatus">Employee Status</label>
+            <label for="employeeStatus" style="font-weight: bold;">Employee Status</label>
             <p-selectButton [options]="stateOptions" id="employeeStatus" name="employeeStatus" [(ngModel)]="employee.employeeStatus" optionLabel="label" optionValue="value"></p-selectButton>
-            <!-- <input [(ngModel)]="employee.employeeStatus" id="employeeStatus" type="text" name="employeeStatus" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText>  -->
           </div>
           
       </div>
       <div class="p-fluid grid formgrid">
         
-          <!-- <div class="field col">
-              <label for="id">Id</label>
-              <input  [(ngModel)]="employee.id" id="id" name="id" type="text"  disabled="true" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
-          </div> -->
+         
           <div class="field col-12 md:col-6">
-            <label for="address">Address</label>
+            <label for="address" style="font-weight: bold;">Address</label>
             <textarea pInputTextarea [(ngModel)]="employee.address" id="address" type="text" name="address" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea> 
           </div>
           
-          <!-- <div class="field col"> -->
+          
             <div class="field col-12 md:col-6">
-                <label for="city">City</label>
-                <!-- <input [(ngModel)]="employee.city" id="city" name="city" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"  pInputText>  -->
+                <label for="city" style="font-weight: bold;">City</label>
                 <p-autoComplete [(ngModel)]="employee.city" id="city" name="city" [group]="true" [suggestions]="filteredGroups" (completeMethod)="filterGroupedCity($event)" field="label" [dropdown]="true" >
                     <ng-template let-group pTemplate="group">
                         <div class="flex align-items-center">
-                            <!-- <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'mr-2 flag flag-' + group.value" style="width: 20px"/> -->
                             <span [class]="'mr-2 flag flag-' + group.value" style="width: 20px"></span>
                             <span>{{group.label}}</span>
                         </div>
                     </ng-template>
                 </p-autoComplete>
-            <!-- </div> -->
             
         </div>
           </div>
@@ -108,12 +129,125 @@
         
            
                 <div class="field col-12 md:col-6">
-                    <label for="dateOfBirth">Date Of Birth</label>
+                    <label for="dateOfBirth" style="font-weight: bold;">Date Of Birth</label>
                     <p-calendar [(ngModel)]="employee.dateOfBirth" id="dateOfBirth" name="dateOfBirth" [showIcon]="true" inputId="icon"></p-calendar>
                 </div>
-        </div>          
-          <div class="formgrid grid">
+                <div class="field col-12 md:col-6">
+                  <label for="time" style="font-weight: bold;">Time / 24h</label>
+                  <p-calendar [showTime]="true" [showSeconds]="true" inputId="time"></p-calendar>
+              </div> 
+        </div>   
+        <div class="p-fluid grid formgrid">
+          
+
+        </div>
+              
+          <div class="p-fluid grid formgrid">
           <p-button label="Submit" icon="pi pi-check" iconPos="right" type="submit"></p-button>
           </div>
-    </form>
+        </div>
+    </form> 
+
+    <!-- <form [formGroup]="ngForm" (ngSubmit)="addEmployeeFunc()" style="margin-left: 20%;margin-right: 20%;">
+      <div class="card">
+              <div class="flex align-items-center justify-content-center bg-blue-500 font-bold text-white m-2 border-round" style="min-width: 200px; min-height: 100%">
+                  <h3>Add New Employee</h3>
+              </div>
+              
+     
+        
+        <br/>
+        <br/>         
+
+
+    <div class="formgrid grid">
+      <div class="field col">
+          <label for="name">Name</label>
+          <input [(ngModel)]="employee.name" required id="name" name="name" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"  pInputText> 
+      </div>
+      <div class="field col">
+          <label for="email">Email</label>
+          <input  [(ngModel)]="employee.email" id="email" name="email" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+          <label for="phone">Phone</label>
+          <input [(ngModel)]="employee.phone" id="phone" type="text" name="phone" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+      </div>
+      <div class="field col">
+          <label for="salary">Salary</label>
+          <input [(ngModel)]="employee.salary" id="salary" type="text" name="salary" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+      </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+          <label for="departmentId">Department</label>
+         
+          <select [(ngModel)]="employee.departmentId" id="departmentId" name="departmentId" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" 
+          style="appearance: auto">
+            <option value="">Select Department</option>  
+            <option *ngFor="let dep of departments" value="{{dep.id}}">{{dep.name}}</option>              
+        </select>
+      </div>
+      <div class="field col ">
+          <label for="gender">Gender</label>
+          <div class="flex flex-nowrap overflow-hidden card-container">
+              <div *ngFor="let item of genders" class="field-checkbox">
+                  <p-radioButton [inputId]="item.gender" [(ngModel)]="employee.gender" [value]="item" id="gender" name="gender" ></p-radioButton>
+                  <label [for]="item">{{item}}</label>&nbsp;&nbsp;&nbsp;
+              </div>   
+          </div>
+           
+        </div>
+    </div>
+    <div class="formgrid grid">
+      <div class="field col">
+          <label for="age">Age</label>
+          
+          <input  [(ngModel)]="employee.age" id="age" name="age" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" pInputText> 
+        </div>
+      <div class="field col">
+          <label for="employeeStatus">Employee Status</label>
+          <p-selectButton [options]="stateOptions" id="employeeStatus" name="employeeStatus" [(ngModel)]="employee.employeeStatus" optionLabel="label" optionValue="value"></p-selectButton>
+        </div>
+        
+    </div>
+    <div class="p-fluid grid formgrid">
+      
+       
+        <div class="field col-12 md:col-6">
+          <label for="address">Address</label>
+          <textarea pInputTextarea [(ngModel)]="employee.address" id="address" type="text" name="address" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea> 
+        </div>
+        
+        
+          <div class="field col-12 md:col-6">
+              <label for="city">City</label>
+              <p-autoComplete [(ngModel)]="employee.city" id="city" name="city" [group]="true" [suggestions]="filteredGroups" (completeMethod)="filterGroupedCity($event)" field="label" [dropdown]="true" >
+                  <ng-template let-group pTemplate="group">
+                      <div class="flex align-items-center">
+                          <span [class]="'mr-2 flag flag-' + group.value" style="width: 20px"></span>
+                          <span>{{group.label}}</span>
+                      </div>
+                  </ng-template>
+              </p-autoComplete>
+          
+      </div>
+        </div>
+        <div class="p-fluid grid formgrid">
+      
+         
+              <div class="field col-12 md:col-6">
+                  <label for="dateOfBirth">Date Of Birth</label>
+                  <p-calendar formControlName="dateOfBirth" id="dateOfBirth" name="dateOfBirth" [showIcon]="true" inputId="icon"></p-calendar>
+              </div>
+      </div>          
+        <div class="p-fluid grid formgrid">
+        <p-button label="Submit" icon="pi pi-check" iconPos="right" type="submit"></p-button>
+        </div>
+      </div>
+  </form> -->
+
+    
 </div>

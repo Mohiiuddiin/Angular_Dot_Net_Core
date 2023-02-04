@@ -1,4 +1,5 @@
 import { Component,OnInit } from '@angular/core';
+import { Table } from 'primeng/table';
 import { Employee } from 'src/app/models/employee.model';
 import { EmployeesService } from 'src/app/services/employees.service';
 
@@ -12,32 +13,13 @@ import { EmployeesService } from 'src/app/services/employees.service';
 
 export class EmployeesListComponent implements OnInit {
   employees : Employee[] = [
-    // {
-    //   id:'1',
-    //   name:'A',
-    //   email:'a@gmail.com',
-    //   department:'a dept',
-    //   phone:123456,
-    //   salary:10  
-    // },
-    // {
-    //   id:'2',
-    //   name:'B',
-    //   email:'b@gmail.com',
-    //   department:'b dept',
-    //   phone:123456,
-    //   salary:10  
-    // },
-    // {
-    //   id:'3',
-    //   name:'C',
-    //   email:'c@gmail.com',
-    //   department:'c dept',
-    //   phone:123456,
-    //   salary:10  
-    // }
+    
   ];
+  statuses: any[];
 
+  loading: boolean = true;
+
+  activityValues: number[] = [0, 100];
   //ELEMENT_DATA: Employee[] = [];
   constructor(private employeeService: EmployeesService){}
 
@@ -47,6 +29,8 @@ export class EmployeesListComponent implements OnInit {
       {
         //console.log(employees);
         this.employees = employees;
+        this.loading = false;
+
         //this.ELEMENT_DATA = employees;
       },
       error:(response) => 
@@ -56,8 +40,11 @@ export class EmployeesListComponent implements OnInit {
       }
     });
   }
-
+  clear(table: Table) {
+    table.clear();
+}
   
+
   displayedColumns: string[] = ['id','name', 'email','phone','salary', 'departmentName','Action'];
   
 }

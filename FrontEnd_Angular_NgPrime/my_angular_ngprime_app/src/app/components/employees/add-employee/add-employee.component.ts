@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FilterService, SelectItemGroup } from 'primeng/api';
+import { FilterService, MessageService, SelectItemGroup } from 'primeng/api';
 import { department } from 'src/app/models/department.model';
 import { Employee } from 'src/app/models/employee.model';
 import { DepartmentsService } from 'src/app/services/departments.service';
@@ -9,7 +9,7 @@ import { EmployeesService } from 'src/app/services/employees.service';
 @Component({
   selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
-  styleUrls: ['./add-employee.component.css']
+  styleUrls: ['./add-employee.component.css'],providers: [MessageService]
 })
 
 export class AddEmployeeComponent implements OnInit {
@@ -34,18 +34,20 @@ export class AddEmployeeComponent implements OnInit {
       employeeStatus: '',
       address: '',
       dateOfBirth:'',
+      
 
    }
 
    department:department = {
-    id:'',
-    name:''     
+    id:"",
+    name:""     
   }
   departments : department[] = [];
-  selectedDept: department = {id:'',name:''};
+  selectedDept: department = {id:"",name:""};
+  messagetype:any;
 
    //ame,email,phone,salary,department
-   constructor(private employeeService:EmployeesService,private departmentService:DepartmentsService,private router:Router,private filterService: FilterService){
+   constructor(private messageService: MessageService,private employeeService:EmployeesService,private departmentService:DepartmentsService,private router:Router,private filterService: FilterService){
       
       
    }
@@ -100,21 +102,53 @@ export class AddEmployeeComponent implements OnInit {
         console.log(response);
         //this.employees = employees;
       }
-    });
+    });    
    }
+
+  //  ngForm = this.builder.group({
+  //   // id:'',
+  //     name:this.builder.control({value:'',disabled:false},Validators.required),      
+  //     email:this.builder.control({value:'',disabled:false},Validators.required),
+  //     phone:this.builder.control({value:'',disabled:false},Validators.required),
+  //     salary:this.builder.control({value:'',disabled:false},Validators.required),
+  //     departmentId:this.builder.control({value:'',disabled:false},Validators.required),
+  //     departmentName:this.builder.control({value:'',disabled:false},Validators.required),
+  //     city: this.builder.control({value:'',disabled:false},Validators.required),
+  //     age: this.builder.control({value:0,disabled:false},Validators.required),
+  //     gender: this.builder.control({value:'',disabled:false},Validators.required),
+  //     employeeStatus: this.builder.control({value:'',disabled:false},Validators.required),
+  //     address: this.builder.control({value:'',disabled:false},Validators.required),
+  //     dateOfBirth:this.builder.control({value:'',disabled:false},Validators.required),    
+  // });
+
+
    addEmployeeFunc(){
       //console.log(this.addEmployee);
       // this.employeeService.add(this.addEmployee).subscribe({
       //   next: (employee) =>{
       //     console.log(employee);
       //   }
-      // });     
-      this.employeeService.add(this.employee).subscribe({
-        next:(employee)=>{
-          console.log(employee);
-          this.router.navigate(['employees']);
-        }
-      });
+      // });   
+      // if (this.ngForm.valid) {
+        this.employee.departmentId = this.department.id.toString();
+        console.log(this.employee.departmentId);
+        this.employeeService.add(this.employee).subscribe({
+          
+          next:(employee)=>{
+            console.log(employee);
+            // this.router.navigate(['employees']);
+
+            this.messageService.add({key: 'key',severity: 'success',summary: 'Saved Employee Successfully', detail: 'Name :' + employee.name});
+            this.messagetype = "success";
+          }
+        });
+      // }  
+      // else
+      // {
+      //   this.messageService.add({key: 'key',severity: 'error',summary: 'Please enter values in all mandatory filed', detail: 'Validation'});
+
+      // }
+      
    }
 
    filterGroupedCity(event:any) {
@@ -134,4 +168,24 @@ export class AddEmployeeComponent implements OnInit {
 
     this.filteredGroups = filteredGroups;
   }
+
+  onConfirm() {
+    this.messageService.clear('key');
+    this.router.navigate(['master-data/']);
+  }
+
+  onReject(messagetype:string) {
+
+    // console.log(messagetype+","+this.messagetype);
+      this.messageService.clear('key');
+      if(messagetype=="success"){
+        this.router.navigate(['master-data/']);
+      }
+      // this.router.navigate(['master-data/']);
+  }
+  clear() {
+    this.messageService.clear();
+  }
 }
+
+
