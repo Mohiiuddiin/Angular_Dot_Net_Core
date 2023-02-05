@@ -79,6 +79,18 @@ namespace BackEnd_Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("DepartmentId")
                         .HasColumnType("uniqueidentifier");
 
@@ -86,6 +98,12 @@ namespace BackEnd_Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -116,7 +134,7 @@ namespace BackEnd_Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CustomerName")
                         .HasColumnType("nvarchar(max)");
@@ -143,6 +161,8 @@ namespace BackEnd_Api.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("InvoiceNo");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("MastersData");
                 });
@@ -214,6 +234,15 @@ namespace BackEnd_Api.Migrations
                         .IsRequired();
 
                     b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("BackEnd_Api.Models.MasterData", b =>
+                {
+                    b.HasOne("BackEnd_Api.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("BackEnd_Api.Models.MasterDetailData", b =>

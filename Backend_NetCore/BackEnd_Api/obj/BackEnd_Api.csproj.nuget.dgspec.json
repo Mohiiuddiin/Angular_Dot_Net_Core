@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj": {}
+    "E:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj": {}
   },
   "projects": {
-    "D:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj": {
+    "E:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj",
+        "projectUniqueName": "E:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj",
         "projectName": "BackEnd_Api",
-        "projectPath": "D:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj",
+        "projectPath": "E:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj",
         "packagesPath": "C:\\Users\\Mohiuddin\\.nuget\\packages\\",
-        "outputPath": "D:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\obj\\",
+        "outputPath": "E:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Mohiuddin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.0, )"

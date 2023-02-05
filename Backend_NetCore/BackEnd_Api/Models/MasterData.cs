@@ -10,6 +10,7 @@ namespace BackEnd_Api.Models
         public string InvoiceNo { get; set; } 
         public DateTime InvoiceDate { get; set; }
         public string CustomerId { get; set; } 
+        public Customer Customer { get; set; } 
         public string CustomerName { get; set; }
         public string DeliveryAddress { get; set; }
         public string Remarks { get; set; }

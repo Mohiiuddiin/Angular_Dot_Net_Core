@@ -1,10 +1,12 @@
 ﻿using BackEnd_Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace BackEnd_Api.Controllers
 {
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MasterDetailsController : Controller
@@ -176,7 +178,7 @@ namespace BackEnd_Api.Controllers
         
         public async Task<IActionResult> GetAllMasterData()
         {
-            var data = await _context.MastersData.ToListAsync();
+            var data = await _context.MastersData.Include(x=>x.Customer).ToListAsync();
             return Ok(data);
         }
 
