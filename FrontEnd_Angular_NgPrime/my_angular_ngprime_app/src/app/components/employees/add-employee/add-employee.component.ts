@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NG_VALIDATORS,RequiredValidator,MinLengthValidator,MaxLengthValidator,EmailValidator, Validators, FormBuilder } from '@angular/forms';
+
 import { FilterService, MessageService, SelectItemGroup } from 'primeng/api';
 import { department } from 'src/app/models/department.model';
 import { Employee } from 'src/app/models/employee.model';
@@ -47,12 +49,13 @@ export class AddEmployeeComponent implements OnInit {
   messagetype:any;
 
    //ame,email,phone,salary,department
-   constructor(private messageService: MessageService,private employeeService:EmployeesService,private departmentService:DepartmentsService,private router:Router,private filterService: FilterService){
+   constructor(private builder: FormBuilder,private messageService: MessageService,private employeeService:EmployeesService,private departmentService:DepartmentsService,private router:Router,private filterService: FilterService){
       
       
    }
 
    ngOnInit(): void{
+
     this.stateOptions = [{label: 'Active', value: 'Active'}, {label: 'In Active', value: 'In Active'}];
     this.genders=["Male","Female","Others"]
     this.groupedCities = [
@@ -105,21 +108,21 @@ export class AddEmployeeComponent implements OnInit {
     });    
    }
 
-  //  ngForm = this.builder.group({
-  //   // id:'',
-  //     name:this.builder.control({value:'',disabled:false},Validators.required),      
-  //     email:this.builder.control({value:'',disabled:false},Validators.required),
-  //     phone:this.builder.control({value:'',disabled:false},Validators.required),
-  //     salary:this.builder.control({value:'',disabled:false},Validators.required),
-  //     departmentId:this.builder.control({value:'',disabled:false},Validators.required),
-  //     departmentName:this.builder.control({value:'',disabled:false},Validators.required),
-  //     city: this.builder.control({value:'',disabled:false},Validators.required),
-  //     age: this.builder.control({value:0,disabled:false},Validators.required),
-  //     gender: this.builder.control({value:'',disabled:false},Validators.required),
-  //     employeeStatus: this.builder.control({value:'',disabled:false},Validators.required),
-  //     address: this.builder.control({value:'',disabled:false},Validators.required),
-  //     dateOfBirth:this.builder.control({value:'',disabled:false},Validators.required),    
-  // });
+   empForm = this.builder.group({
+    // id:'',
+      name:this.builder.control({value:'',disabled:false},Validators.required),      
+      email:this.builder.control({value:'',disabled:false},Validators.required),
+      phone:this.builder.control({value:'',disabled:false},Validators.required),
+      salary:this.builder.control({value:'',disabled:false},Validators.required),
+      departmentId:this.builder.control({value:'',disabled:false},Validators.required),
+      departmentName:this.builder.control({value:'',disabled:false}),
+      city: this.builder.control({value:'',disabled:false},Validators.required),
+      age: this.builder.control({value:0,disabled:false},Validators.required),
+      gender: this.builder.control({value:'',disabled:false},Validators.required),
+      employeeStatus: this.builder.control({value:'',disabled:false},Validators.required),
+      address: this.builder.control({value:'',disabled:false},Validators.required),
+      dateOfBirth:this.builder.control({value:'',disabled:false},Validators.required),    
+  });
 
 
    addEmployeeFunc(){
@@ -129,25 +132,36 @@ export class AddEmployeeComponent implements OnInit {
       //     console.log(employee);
       //   }
       // });   
-      // if (this.ngForm.valid) {
+      console.log(this.empForm.getRawValue());
+
+      if (this.empForm.valid) {
         this.employee.departmentId = this.department.id.toString();
-        console.log(this.employee.departmentId);
-        this.employeeService.add(this.employee).subscribe({
+        this.empForm.get("departmentId")?.setValue(this.department.id.toString());
+        console.log(this.empForm.getRawValue());
+        // this.employeeService.add(this.employee).subscribe({
           
+        //   next:(employee)=>{
+        //     console.log(employee);
+        //     // this.router.navigate(['employees']);
+
+        //     this.messageService.add({key: 'key',severity: 'success',summary: 'Saved Employee Successfully', detail: 'Name :' + employee.name});
+        //     this.messagetype = "success";
+        //   }
+        // });
+        this.employeeService.add(this.empForm.getRawValue()).subscribe({          
           next:(employee)=>{
             console.log(employee);
             // this.router.navigate(['employees']);
-
             this.messageService.add({key: 'key',severity: 'success',summary: 'Saved Employee Successfully', detail: 'Name :' + employee.name});
             this.messagetype = "success";
           }
         });
-      // }  
-      // else
-      // {
-      //   this.messageService.add({key: 'key',severity: 'error',summary: 'Please enter values in all mandatory filed', detail: 'Validation'});
+      }  
+      else
+      {
+        this.messageService.add({key: 'key',severity: 'error',summary: 'Please enter values in all mandatory filed', detail: 'Validation'});
 
-      // }
+      }
       
    }
 

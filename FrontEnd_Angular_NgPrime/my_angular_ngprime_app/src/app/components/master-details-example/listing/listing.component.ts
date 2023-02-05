@@ -16,10 +16,7 @@ export class ListingComponent implements OnInit {
   invno:any;
   position: string = '';
   loading: boolean = true;
-  masterCustomer : any;
-
-
-  
+  masterCustomer : any; 
   /**
    *
    */

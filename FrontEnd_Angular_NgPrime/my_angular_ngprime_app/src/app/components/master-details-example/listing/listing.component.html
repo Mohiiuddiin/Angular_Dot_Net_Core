@@ -182,12 +182,6 @@
     </p-table>
 </div> -->
 
-
-
-
-
-
-
 <div style="margin-left: 10%;margin-right: 10%;">
     <div class="flex align-items-center justify-content-center bg-blue-500 font-bold text-white m-2 border-round" style="min-width: 100%; min-height: 100%">
         <h3>List of Master Data</h3>
@@ -235,7 +229,7 @@
                             </p-multiSelect>
                         </ng-template>
                     </p-columnFilter> -->
-                    <p-columnFilter field="customerName" matchMode="in" [showMenu]="true">
+                    <p-columnFilter field="customer" matchMode="in" [showMenu]="true">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                             <p-multiSelect [ngModel]="value" [options]="masterCustomer" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
                                 <ng-template let-option pTemplate="item">
@@ -279,7 +273,7 @@
                     {{customer.invoiceNo}}
                 </td>
                 <td>
-                    {{customer.customerName}}
+                    {{customer.customer.name}}
                 </td>
                 <td>
                    {{customer.remarks}}

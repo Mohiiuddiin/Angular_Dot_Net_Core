@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 // import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule,ReactiveFormsModule,FormControl } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule,FormControl, RequiredValidator, NG_VALIDATORS } from '@angular/forms';
 import {MenubarModule} from 'primeng/menubar';
 import { AddEmployeeComponent } from './components/employees/add-employee/add-employee.component';
 import { EditEmployeeComponent } from './components/employees/edit-employee/edit-employee.component';
