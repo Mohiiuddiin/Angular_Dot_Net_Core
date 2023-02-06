@@ -1,19 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem, SelectItem, SelectItemGroup } from 'primeng/api';
+import { UserLoginService } from './services/user-login.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements DoCheck {
 
     
 
     //////
-  title = 'my_angular_ngprime_app';
+    title = 'my_angular_ngprime_app';
 
-  items: MenuItem[] = [];
+    items: MenuItem[] = [];
+    isMenuVisible = true;
+    isadmin = false;
+
+/**
+ *
+ */
+    constructor(private route: Router, private service: UserLoginService) {
+            
+    }
+
 
     ngOnInit() {
         this.items = [
@@ -174,4 +186,21 @@ export class AppComponent {
             }
         ];
     }
+
+    
+    ngDoCheck(): void {
+        const currentroute = this.route.url;
+        console.log(currentroute);
+        if (currentroute == '/login' || currentroute == '/register') {
+          this.isMenuVisible = false
+        } else {
+          this.isMenuVisible = true
+        }
+    
+        if (this.service.GetRole() == 'admin') {
+          this.isadmin = true;
+        }else{
+          this.isadmin = false;
+        }
+      }
 }

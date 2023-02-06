@@ -7,6 +7,10 @@ import { EditEmployeeComponent } from './components/employees/edit-employee/edit
 import { EmployeesListComponent } from './components/employees/employees-list/employees-list.component';
 import { CreateInvComponent } from './components/master-details-example/create-inv/create-inv.component';
 import { ListingComponent } from './components/master-details-example/listing/listing.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegisterComponent } from './components/user/register/register.component';
+import { AuthGuard } from './Guard/auth.guard';
+import { RoleGuard } from './Guard/role.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +19,8 @@ const routes: Routes = [
   },
   {
     path:'employees',
-    component : EmployeesListComponent 
+    component : EmployeesListComponent ,
+    canActivate:[AuthGuard]
   },
   {
     path:'add-employee',
@@ -32,7 +37,8 @@ const routes: Routes = [
     component : DepartmentsListComponent
   },{
     path:'master-data',
-    component : ListingComponent
+    component : ListingComponent,
+    canActivate:[RoleGuard]
   },
   {
     path:'master-data/create-inv',
@@ -40,6 +46,13 @@ const routes: Routes = [
   },{
     path:'master-data/edit-inv/:invNo',
     component : CreateInvComponent
+  },
+  {
+    path:'login',
+    component : LoginComponent
+  },{
+    path:'register',
+    component : RegisterComponent
   }
 ];
 

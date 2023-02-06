@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +15,7 @@ import { DepartmentsListComponent } from './components/departments/departments-l
 import { AddDepartmentComponent } from './components/departments/add-department/add-department.component';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import {PanelModule} from 'primeng/panel';
 
 
 
@@ -37,6 +38,10 @@ import {CalendarModule} from 'primeng/calendar';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {MultiSelectModule} from 'primeng/multiselect';
 
+import { LoginComponent } from './components/user/login/login.component';
+import { RegisterComponent } from './components/user/register/register.component';
+import { TokenInterceptorServiceService } from './services/token-interceptor-service.service';
+
 
 
 @NgModule({
@@ -50,7 +55,9 @@ import {MultiSelectModule} from 'primeng/multiselect';
     CreateInvComponent,
     // ListingComponent,
     CreateInvComponent,
-    ListingComponent,
+    ListingComponent,   
+    LoginComponent,
+    RegisterComponent, 
 
   ],
   imports: [
@@ -76,11 +83,13 @@ import {MultiSelectModule} from 'primeng/multiselect';
     SliderModule,
     CalendarModule
     ,ConfirmDialogModule,
-    MultiSelectModule
+    MultiSelectModule,
+    PanelModule
 
     // ToastrModule.forRoot()
   ],
-  providers: [],
+  // providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorServiceService,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
