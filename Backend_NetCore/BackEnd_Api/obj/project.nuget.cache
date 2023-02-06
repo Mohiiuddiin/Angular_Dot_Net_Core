@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "H439q7HtKH2HET3UdPPg/M1Cc1ZpoL2heBGIH4XPjfneL8avsLsiO3fYp5VhYxHezpjkAeFXsK7IayJEnrOl0A==",
+  "dgSpecHash": "GMRLqzp5i+EP4O60W1px5ny3pXS/WDM6Gs7NONvNasVMBH+SjjD0kOms64ZYlKoGPXLB6KEg6D4bF7fvZRhwQg==",
   "success": true,
-  "projectFilePath": "E:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj",
+  "projectFilePath": "E:\\g\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Mohiuddin\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Mohiuddin\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.0\\microsoft.aspnetcore.authentication.jwtbearer.6.0.0.nupkg.sha512",

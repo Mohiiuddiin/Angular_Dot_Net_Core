@@ -2273,11 +2273,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj",
+      "projectUniqueName": "E:\\g\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj",
       "projectName": "BackEnd_Api",
-      "projectPath": "E:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj",
+      "projectPath": "E:\\g\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\BackEnd_Api.csproj",
       "packagesPath": "C:\\Users\\Mohiuddin\\.nuget\\packages\\",
-      "outputPath": "E:\\Angular_Dot_Net_Core\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\obj\\",
+      "outputPath": "E:\\g\\Angular_Dot_Net_Core\\Backend_NetCore\\BackEnd_Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Mohiuddin\\AppData\\Roaming\\NuGet\\NuGet.Config",

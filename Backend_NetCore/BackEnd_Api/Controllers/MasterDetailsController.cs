@@ -6,7 +6,7 @@ using System;
 
 namespace BackEnd_Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MasterDetailsController : Controller
@@ -93,8 +93,7 @@ namespace BackEnd_Api.Controllers
                 //using (var dbTrans = await _context.Database.BeginTransactionAsync())
                 //{
                 try
-                {
-                    
+                {                    
                     var master_data_isexist = await _context.MastersData.FirstOrDefaultAsync(x=>x.InvoiceNo == masterData.InvoiceNo);
                     if (master_data_isexist != null)
                     {
@@ -109,8 +108,7 @@ namespace BackEnd_Api.Controllers
                         if (master_det_data != null && master_det_data.Count > 0)
                         {
                             this._context.MasterDetailsData.RemoveRange(master_det_data);
-                        }
-                        
+                        }                        
                         if (masterData.Details!=null)
                         {
                             foreach (var item in masterData.Details)

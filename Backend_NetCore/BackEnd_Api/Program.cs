@@ -25,13 +25,11 @@ builder.Services.Configure<JWTSetting>(builder.Configuration.GetSection("JWTSett
 
 var authkey = builder.Configuration.GetValue<string>("JWTSetting:securitykey");
 
-builder.Services.AddAuthentication(item =>
-{
+builder.Services.AddAuthentication(item =>{
     item.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     item.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(item =>
 {
-
     item.RequireHttpsMetadata = true;
     item.SaveToken = true;
     item.TokenValidationParameters = new TokenValidationParameters()
@@ -44,10 +42,10 @@ builder.Services.AddAuthentication(item =>
         ClockSkew = TimeSpan.Zero
     };
 });
-//var _dbcontext = builder.Services.BuildServiceProvider().GetService<Learn_DBContext>();
-//builder.Services.AddSingleton<IRefreshTokenGenerator>(provider => new RefreshTokenGenerator(_dbcontext));
+var _dbcontext = builder.Services.BuildServiceProvider().GetService<Learn_DBContext>();
+builder.Services.AddSingleton<IRefreshTokenGenerator>(provider => new RefreshTokenGenerator(_dbcontext));
 
-builder.Services.AddScoped<IRefreshTokenGenerator, RefreshTokenGenerator>();
+//builder.Services.AddScoped<IRefreshTokenGenerator, RefreshTokenGenerator>();
 
 
 

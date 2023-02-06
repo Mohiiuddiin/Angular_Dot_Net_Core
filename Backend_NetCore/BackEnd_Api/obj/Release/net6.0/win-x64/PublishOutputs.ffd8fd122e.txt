@@ -1,0 +1,6 @@
+E:\g\Angular_Dot_Net_Core\Backend_NetCore\BackEnd_Api\obj\Release\net6.0\win-x64\PubTmp\Out\appsettings.Development.json
+E:\g\Angular_Dot_Net_Core\Backend_NetCore\BackEnd_Api\obj\Release\net6.0\win-x64\PubTmp\Out\appsettings.json
+E:\g\Angular_Dot_Net_Core\Backend_NetCore\BackEnd_Api\obj\Release\net6.0\win-x64\PubTmp\Out\BackEnd_Api.pdb
+E:\g\Angular_Dot_Net_Core\Backend_NetCore\BackEnd_Api\obj\Release\net6.0\win-x64\PubTmp\Out\aspnetcorev2_inprocess.dll
+E:\g\Angular_Dot_Net_Core\Backend_NetCore\BackEnd_Api\obj\Release\net6.0\win-x64\PubTmp\Out\Microsoft.Data.SqlClient.SNI.dll
+E:\g\Angular_Dot_Net_Core\Backend_NetCore\BackEnd_Api\obj\Release\net6.0\win-x64\PubTmp\Out\BackEnd_Api.exe
