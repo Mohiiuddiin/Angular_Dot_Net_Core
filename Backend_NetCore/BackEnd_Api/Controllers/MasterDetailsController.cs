@@ -6,7 +6,7 @@ using System;
 
 namespace BackEnd_Api.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class MasterDetailsController : Controller
@@ -234,6 +234,7 @@ namespace BackEnd_Api.Controllers
             }
             catch (Exception ex)
             {
+                //Console.WriteLine(ex.Message);
                 //throw ex;
                 return Ok(new RespType() { Result = "failed", KeyVal = invoiceno });
             }

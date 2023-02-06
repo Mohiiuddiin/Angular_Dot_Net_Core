@@ -60,7 +60,6 @@ namespace BackEnd_Api.Controllers
                     {
                         new Claim(ClaimTypes.Name, _user.Userid),
                         new Claim(ClaimTypes.Role, _user.Role)
-
                     }
                 ),
                 Expires = DateTime.Now.AddMinutes(2),
