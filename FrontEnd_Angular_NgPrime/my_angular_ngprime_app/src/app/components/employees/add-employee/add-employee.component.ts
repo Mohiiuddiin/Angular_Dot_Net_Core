@@ -124,7 +124,6 @@ export class AddEmployeeComponent implements OnInit {
       dateOfBirth:this.builder.control({value:'',disabled:false},Validators.required),    
   });
 
-
    addEmployeeFunc(){
       //console.log(this.addEmployee);
       // this.employeeService.add(this.addEmployee).subscribe({
@@ -133,7 +132,6 @@ export class AddEmployeeComponent implements OnInit {
       //   }
       // });   
       console.log(this.empForm.getRawValue());
-
       if (this.empForm.valid) {
         this.employee.departmentId = this.department.id.toString();
         this.empForm.get("departmentId")?.setValue(this.department.id.toString());
@@ -160,9 +158,7 @@ export class AddEmployeeComponent implements OnInit {
       else
       {
         this.messageService.add({key: 'key',severity: 'error',summary: 'Please enter values in all mandatory filed', detail: 'Validation'});
-
-      }
-      
+      }      
    }
 
    filterGroupedCity(event:any) {
@@ -182,7 +178,6 @@ export class AddEmployeeComponent implements OnInit {
 
     this.filteredGroups = filteredGroups;
   }
-
   onConfirm() {
     this.messageService.clear('key');
     this.router.navigate(['master-data/']);

@@ -15,7 +15,7 @@ export class EmployeesListComponent implements OnInit {
   employees : Employee[] = [
     
   ];
-  statuses: any[];
+  // statuses: any[];
 
   loading: boolean = true;
 

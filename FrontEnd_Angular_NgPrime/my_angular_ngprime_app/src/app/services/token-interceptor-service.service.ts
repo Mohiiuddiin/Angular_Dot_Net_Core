@@ -20,13 +20,14 @@ export class TokenInterceptorServiceService {
   // }
 
   constructor(private inject:Injector) {}
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let authservice=this.inject.get(UserLoginService);
-    let jwtToken = req.clone({
-      setHeaders: {
-        Authorization: 'bearer '+authservice.GetToken()
-      }
-    });
-    return next.handle(jwtToken);
-  }
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        let authservice=this.inject.get(UserLoginService);
+        let jwtToken = req.clone({
+            setHeaders: {
+              Authorization: 'bearer '+authservice.GetToken()
+            }
+            
+        });
+        return next.handle(jwtToken);
+    }
 }

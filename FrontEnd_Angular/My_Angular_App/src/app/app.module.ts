@@ -11,29 +11,19 @@ import { ListingComponent } from './components/master-details-example/listing/li
 import { CreateInvComponent } from './components/master-details-example/create-inv/create-inv.component';
 import { AddDepartmentComponent } from './components/departments/add-department/add-department.component';
 import { DepartmentsListComponent } from './components/departments/departments-list/departments-list.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
-
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
-
 import {MatSelectModule} from '@angular/material/select';
-
 import { ToastrModule } from 'ngx-toastr';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatRadioModule} from '@angular/material/radio';
-
-
-
-
-
-
 
 @NgModule({
   declarations: [

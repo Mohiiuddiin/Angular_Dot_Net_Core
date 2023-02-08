@@ -134,7 +134,6 @@ namespace BackEnd_Api.Controllers
                             {
                                 item.InvoiceNo = masterData.InvoiceNo;
                                 await _context.MasterDetailsData.AddAsync(item);
-
                             }
                         }
                         await _context.SaveChangesAsync();
