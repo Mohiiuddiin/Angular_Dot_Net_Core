@@ -50,7 +50,6 @@ namespace BackEnd_Api.Controllers
             var _user = _context.TblUsers.FirstOrDefault(o => o.Userid == login.UserName && o.Password == login.Password && o.IsActive == true);
             if (_user == null)
                 return Unauthorized();
-
             var tokenhandler = new JwtSecurityTokenHandler();
             var tokenkey = Encoding.UTF8.GetBytes(_setting.SecurityKey);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -67,7 +66,6 @@ namespace BackEnd_Api.Controllers
             };
             var token = tokenhandler.CreateToken(tokenDescriptor);
             string finaltoken = tokenhandler.WriteToken(token);
-
             tokenResponse.JWTToken = finaltoken;
             tokenResponse.RefreshToken = _refreshTokenGenerator.GenerateRefreshToken(login.UserName);
             return Ok(tokenResponse);
@@ -91,14 +89,12 @@ namespace BackEnd_Api.Controllers
             {
                 return Unauthorized();
             }
-
             var userName = principle.Identity.Name;
             var reftbl = _context.TblRefreshtokens.FirstOrDefault(x => x.UserId == userName && x.RefreshToken == token.RefreshToken);
             if (reftbl == null)
             {
                 return Unauthorized();
             }
-
             TokenResponse res = Authenticate(userName, principle.Claims.ToArray());
             return Ok(res);
         }
