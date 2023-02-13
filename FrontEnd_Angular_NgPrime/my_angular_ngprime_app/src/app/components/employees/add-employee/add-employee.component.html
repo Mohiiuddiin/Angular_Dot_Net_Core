@@ -186,23 +186,26 @@
 </div>
 <div class="p-fluid grid formgrid">
 <div class="field col-12 md:col-6">
-    <label for="departmentId" style="font-weight: bold;">Department</label> 
-   
-
-
-  <p-dropdown [options]="departments" id="departmentId" name="departmentId" formControlName="departmentId" [(ngModel)]="department" optionLabel="name" [filter]="true" filterBy="name"  placeholder="Select a Department">
-    <ng-template pTemplate="selectedItem">
-        <div class="dept-item dept-item-value" *ngIf="department">
-            <div>{{department.name}}</div>
-        </div>
-    </ng-template>
-    <ng-template let-dept pTemplate="item">
-        <div class="dept-item">
-            <div>{{dept.name}}</div>
-        </div>
-    </ng-template>
-</p-dropdown>
-
+    <label for="departmentId" style="font-weight: bold;">Department </label>  
+    <div class="p-fluid grid"> 
+      <div class="col-12 md:col-10">
+          <p-dropdown [options]="departments" id="departmentId" name="departmentId" formControlName="departmentId" [(ngModel)]="department" optionLabel="name" [filter]="true" filterBy="name"  placeholder="Select a Department">
+            <ng-template pTemplate="selectedItem">
+                <div class="dept-item dept-item-value" *ngIf="department">
+                    <div>{{department.name}}</div>
+                </div>          
+            </ng-template>
+            <ng-template let-dept pTemplate="item">
+                <div class="dept-item">
+                    <div>{{dept.name}}</div>
+                </div>
+            </ng-template>        
+        </p-dropdown> 
+      </div>
+      <div class="col-12 md:col-2">
+          <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded p-button-success p-button-sm" (click)="showAddDeptForm()"></button>
+      </div>
+    </div>
 </div>
 <div class="field col-12 md:col-6">
     <label for="gender" style="font-weight: bold;">Gender</label>            

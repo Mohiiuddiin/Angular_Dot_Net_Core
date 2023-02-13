@@ -41,6 +41,7 @@ export class CreateInvComponent implements OnInit {
     this.AutoGeberatedInvNo();
 
     this.editinvoiceno = this.active_route.snapshot.paramMap.get('invNo');
+    
     console.log(this.editinvoiceno);
     if(this.editinvoiceno!=null){
       this.isedit = true;

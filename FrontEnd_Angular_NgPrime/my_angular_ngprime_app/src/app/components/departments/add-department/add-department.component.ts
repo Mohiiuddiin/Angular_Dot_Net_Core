@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { department } from 'src/app/models/department.model';
 import { DepartmentsService } from 'src/app/services/departments.service';
 
@@ -15,12 +15,11 @@ export class AddDepartmentComponent implements OnInit {
      
   }
   //ame,email,phone,salary,department
-  constructor(private departmentService:DepartmentsService,private router:Router){
-
+  constructor(private departmentService:DepartmentsService,private router:Router,private active_route:ActivatedRoute){
   }
 
   ngOnInit(): void{
-   
+    
 
   }
   addDepartmentFunc(){
@@ -33,8 +32,11 @@ export class AddDepartmentComponent implements OnInit {
 
      this.departmentService.add(this.department).subscribe({
        next:(department)=>{
-         console.log(department);
-         this.router.navigate(['departments']);
+          //  console.log(department);
+          // console.log('...dkdjkf'+this.router.url);
+          if(this.router.url!="/add-employee"){
+            this.router.navigate(['departments']);
+          }         
        }
      });
   }

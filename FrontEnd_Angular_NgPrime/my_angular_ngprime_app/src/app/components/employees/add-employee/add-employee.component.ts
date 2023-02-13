@@ -7,11 +7,14 @@ import { department } from 'src/app/models/department.model';
 import { Employee } from 'src/app/models/employee.model';
 import { DepartmentsService } from 'src/app/services/departments.service';
 import { EmployeesService } from 'src/app/services/employees.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { AddDepartmentComponent } from '../../departments/add-department/add-department.component';
 
 @Component({
   selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
-  styleUrls: ['./add-employee.component.css'],providers: [MessageService]
+  styleUrls: ['./add-employee.component.css']
+  ,providers: [MessageService,DialogService]
 })
 
 export class AddEmployeeComponent implements OnInit {
@@ -47,15 +50,16 @@ export class AddEmployeeComponent implements OnInit {
   departments : department[] = [];
   selectedDept: department = {id:"",name:""};
   messagetype:any;
+  ref:any;
 
    //ame,email,phone,salary,department
-   constructor(private builder: FormBuilder,private messageService: MessageService,private employeeService:EmployeesService,private departmentService:DepartmentsService,private router:Router,private filterService: FilterService){
+   constructor(public dialogService: DialogService,private builder: FormBuilder,private messageService: MessageService,private employeeService:EmployeesService,private departmentService:DepartmentsService,private router:Router,private filterService: FilterService){
       
       
    }
 
    ngOnInit(): void{
-
+    this.get_departments();
     this.stateOptions = [{label: 'Active', value: 'Active'}, {label: 'In Active', value: 'In Active'}];
     this.genders=["Male","Female","Others"]
     this.groupedCities = [
@@ -87,25 +91,7 @@ export class AddEmployeeComponent implements OnInit {
           ]
       }
   ];
-    this.departmentService.getAll().subscribe({
-      next:(departments) => 
-      {
-        //console.log(employees);
-        this.departments = departments;
-
-        // this.departments = this.departments.map(x => ({
-        //   id: x.id,
-        //   name: x.name
-        // }));
-        console.log(departments);
-        //this.ELEMENT_DATA = employees;
-      },
-      error:(response) => 
-      {
-        console.log(response);
-        //this.employees = employees;
-      }
-    });    
+       
    }
 
    empForm = this.builder.group({
@@ -124,6 +110,27 @@ export class AddEmployeeComponent implements OnInit {
       dateOfBirth:this.builder.control({value:'',disabled:false},Validators.required),    
   });
 
+  get_departments(){
+    this.departmentService.getAll().subscribe({
+      next:(departments) => 
+      {
+        //console.log(employees);
+        this.departments = departments;
+
+        // this.departments = this.departments.map(x => ({
+        //   id: x.id,
+        //   name: x.name
+        // }));
+        console.log(departments);
+        //this.ELEMENT_DATA = employees;
+      },
+      error:(response) => 
+      {
+        console.log(response);
+        //this.employees = employees;
+      }
+    }); 
+  }
    addEmployeeFunc(){
       //console.log(this.addEmployee);
       // this.employeeService.add(this.addEmployee).subscribe({
@@ -184,8 +191,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   onReject(messagetype:string) {
-
-    // console.log(messagetype+","+this.messagetype);
+      // console.log(messagetype+","+this.messagetype);
       this.messageService.clear('key');
       if(messagetype=="success"){
         this.router.navigate(['master-data/']);
@@ -194,6 +200,19 @@ export class AddEmployeeComponent implements OnInit {
   }
   clear() {
     this.messageService.clear();
+  }
+
+  showAddDeptForm(){
+    this.ref = this.dialogService.open(AddDepartmentComponent, {
+      header: 'Add Department',
+      width: '70%',
+      contentStyle: {"overflow": "auto"},
+      baseZIndex: 10000,
+      maximizable: true
+  });
+
+  //console.log('success');
+  //this.get_departments();
   }
 }
 
