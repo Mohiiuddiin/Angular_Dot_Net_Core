@@ -16,6 +16,7 @@ import { AddDepartmentComponent } from './components/departments/add-department/
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {PanelModule} from 'primeng/panel';
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
 
 
 
@@ -84,7 +85,8 @@ import { TokenInterceptorServiceService } from './services/token-interceptor-ser
     CalendarModule
     ,ConfirmDialogModule,
     MultiSelectModule,
-    PanelModule
+    PanelModule,
+    DynamicDialogModule
 
     // ToastrModule.forRoot()
   ],

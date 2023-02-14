@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NG_VALIDATORS,RequiredValidator,MinLengthValidator,MaxLengthValidator,EmailValidator, Validators, FormBuilder } from '@angular/forms';
 
@@ -53,13 +53,53 @@ export class AddEmployeeComponent implements OnInit {
   ref:any;
 
    //ame,email,phone,salary,department
-   constructor(public dialogService: DialogService,private builder: FormBuilder,private messageService: MessageService,private employeeService:EmployeesService,private departmentService:DepartmentsService,private router:Router,private filterService: FilterService){
-      
+   constructor( public dialogService: DialogService,
+                private builder: FormBuilder,
+                private messageService: MessageService,
+                private employeeService:EmployeesService,
+                private departmentService:DepartmentsService,
+                private router:Router,
+                private filterService: FilterService){     
       
    }
 
+  //  ngOnChanges(changes: any) {
+  //   console.log('ngOnChanges called!');
+  //   console.log(changes);
+  // }
+  
+
+  // ngAfterContentInit() {
+  //   console.log('ngAfterContentInit called!');
+  // }
+
+  // ngAfterContentChecked() {
+  //   console.log('ngAfterContentChecked called!');    
+  // }
+
+  // ngAfterViewInit() {
+  //   console.log('ngAfterViewInit called!');
+  // } 
+  
+  // ngOnDestroy() {
+  //   console.log('ngOnDestroy called!');
+  // }
+
    ngOnInit(): void{
-    this.get_departments();
+    
+    
+      
+    if(this.departments.length==0){
+      this.get_departments();
+    }
+    this.departmentService.departmentsChanged
+      .subscribe(
+        (department: department[]) => {
+          this.departments = department;
+          // console.log(this.departments);
+        }
+      );
+    
     this.stateOptions = [{label: 'Active', value: 'Active'}, {label: 'In Active', value: 'In Active'}];
     this.genders=["Male","Female","Others"]
     this.groupedCities = [
@@ -93,7 +133,14 @@ export class AddEmployeeComponent implements OnInit {
   ];
        
    }
-
+  //  ngAfterViewChecked() {
+  //   console.log('ngAfterViewChecked called!');
+  //   //this.get_departments();
+  // }
+  // ngDoCheck() {
+  //   console.log('ngDoCheck called!');     
+  //   this.get_departments();
+  // }
    empForm = this.builder.group({
     // id:'',
       name:this.builder.control({value:'',disabled:false},Validators.required),      
@@ -110,6 +157,7 @@ export class AddEmployeeComponent implements OnInit {
       dateOfBirth:this.builder.control({value:'',disabled:false},Validators.required),    
   });
 
+  
   get_departments(){
     this.departmentService.getAll().subscribe({
       next:(departments) => 
@@ -121,7 +169,7 @@ export class AddEmployeeComponent implements OnInit {
         //   id: x.id,
         //   name: x.name
         // }));
-        console.log(departments);
+        // console.log(departments);
         //this.ELEMENT_DATA = employees;
       },
       error:(response) => 
@@ -204,15 +252,14 @@ export class AddEmployeeComponent implements OnInit {
 
   showAddDeptForm(){
     this.ref = this.dialogService.open(AddDepartmentComponent, {
-      header: 'Add Department',
-      width: '70%',
-      contentStyle: {"overflow": "auto"},
-      baseZIndex: 10000,
-      maximizable: true
-  });
-
-  //console.log('success');
-  //this.get_departments();
+        header: 'Add Department',
+        width: '50%',
+        contentStyle: {"overflow": "auto"},
+        baseZIndex: 10000,
+        maximizable: true
+      });
+      //console.log('success');
+      //this.get_departments();
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnChanges,OnInit } from '@angular/core';
 import { Table } from 'primeng/table';
 import { Employee } from 'src/app/models/employee.model';
 import { EmployeesService } from 'src/app/services/employees.service';
@@ -23,6 +23,7 @@ export class EmployeesListComponent implements OnInit {
   //ELEMENT_DATA: Employee[] = [];
   constructor(private employeeService: EmployeesService){}
 
+  
   ngOnInit(): void{
     this.employeeService.getAll().subscribe({
       next:(employees) => 

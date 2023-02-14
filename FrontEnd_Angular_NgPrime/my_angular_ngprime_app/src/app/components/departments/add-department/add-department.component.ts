@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { department } from 'src/app/models/department.model';
 import { DepartmentsService } from 'src/app/services/departments.service';
 
@@ -15,7 +16,7 @@ export class AddDepartmentComponent implements OnInit {
      
   }
   //ame,email,phone,salary,department
-  constructor(private departmentService:DepartmentsService,private router:Router,private active_route:ActivatedRoute){
+  constructor(private departmentService:DepartmentsService,public ref: DynamicDialogRef,private router:Router,private active_route:ActivatedRoute){
   }
 
   ngOnInit(): void{
@@ -36,8 +37,12 @@ export class AddDepartmentComponent implements OnInit {
           // console.log('...dkdjkf'+this.router.url);
           if(this.router.url!="/add-employee"){
             this.router.navigate(['departments']);
-          }         
+          }  else{
+            this.router.navigate(['add-employee']);
+          }       
        }
      });
+
+     this.ref.close();
   }
 }

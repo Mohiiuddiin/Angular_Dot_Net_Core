@@ -1,16 +1,41 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EventEmitter, Injectable, OnInit } from '@angular/core';
+import {  Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { department } from '../models/department.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DepartmentsService {
+export class DepartmentsService implements OnInit {
 
+  
+  departments:department[] = [];
+  departmentsChanged = new EventEmitter<department[]>();
+  
   baseApiUrl:string  = environment.base_api_url;
-  constructor(private htttp:HttpClient) { }
+  constructor(private htttp:HttpClient) {
+    this.getAll().subscribe({
+      next:(departments) => 
+      {        
+        this.departments = departments;
+        this.departmentsChanged.emit(this.departments.slice());
+        // console.log(this.departments);
+      },
+      error:(response) => 
+      {
+        console.log(response);        
+      }
+    }); 
+    
+    
+  }
+
+  ngOnInit(): void {
+    
+  }
+
+  
 
   getAll():Observable<department[]>{
     return this.htttp.get<department[]>(this.baseApiUrl+'/api/Department');
@@ -22,6 +47,13 @@ export class DepartmentsService {
 
   add(adddepartmentRequest:department):Observable<department>{
     adddepartmentRequest.id='00000000-0000-0000-0000-000000000000';
-    return this.htttp.post<department>(this.baseApiUrl+'/api/Department',adddepartmentRequest)
+    this.departmentsOnChange(adddepartmentRequest);   
+    return this.htttp.post<department>(this.baseApiUrl+'/api/Department',adddepartmentRequest);    
+  }
+
+  departmentsOnChange(department:department){   
+    this.departments.push(department);
+    this.departmentsChanged.emit(this.departments.slice());
+    // return this.departments;
   }
 }
