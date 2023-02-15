@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import {  Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NG_VALIDATORS,RequiredValidator,MinLengthValidator,MaxLengthValidator,EmailValidator, Validators, FormBuilder } from '@angular/forms';
 
@@ -17,8 +17,8 @@ import { AddDepartmentComponent } from '../../departments/add-department/add-dep
   ,providers: [MessageService,DialogService]
 })
 
-export class AddEmployeeComponent implements OnInit {
-
+export class AddEmployeeComponent implements OnInit { 
+  submitted = false;
    groupedCities: SelectItemGroup[] = [];
    filteredGroups: any[]= [];
    stateOptions: any[] = [];
@@ -59,8 +59,7 @@ export class AddEmployeeComponent implements OnInit {
                 private employeeService:EmployeesService,
                 private departmentService:DepartmentsService,
                 private router:Router,
-                private filterService: FilterService){     
-      
+                private filterService: FilterService){           
    }
 
   //  ngOnChanges(changes: any) {
@@ -85,10 +84,7 @@ export class AddEmployeeComponent implements OnInit {
   //   console.log('ngOnDestroy called!');
   // }
 
-   ngOnInit(): void{
-    
-    
-      
+   ngOnInit(): void{ 
     if(this.departments.length==0){
       this.get_departments();
     }
@@ -132,6 +128,8 @@ export class AddEmployeeComponent implements OnInit {
       }
   ];
        
+
+  
    }
   //  ngAfterViewChecked() {
   //   console.log('ngAfterViewChecked called!');
@@ -179,6 +177,12 @@ export class AddEmployeeComponent implements OnInit {
       }
     }); 
   }
+  get f()
+  {
+    return this.empForm.controls; 
+  }
+
+  //https://jasonwatmore.com/post/2022/11/18/angular-14-reactive-forms-validation-example
    addEmployeeFunc(){
       //console.log(this.addEmployee);
       // this.employeeService.add(this.addEmployee).subscribe({
@@ -186,6 +190,7 @@ export class AddEmployeeComponent implements OnInit {
       //     console.log(employee);
       //   }
       // });   
+      this.submitted = true;
       console.log(this.empForm.getRawValue());
       if (this.empForm.valid) {
         this.employee.departmentId = this.department.id.toString();
@@ -212,6 +217,7 @@ export class AddEmployeeComponent implements OnInit {
       }  
       else
       {
+        return;
         this.messageService.add({key: 'key',severity: 'error',summary: 'Please enter values in all mandatory filed', detail: 'Validation'});
       }      
    }
@@ -235,14 +241,14 @@ export class AddEmployeeComponent implements OnInit {
   }
   onConfirm() {
     this.messageService.clear('key');
-    this.router.navigate(['master-data/']);
+    this.router.navigate(['employees/']);
   }
 
   onReject(messagetype:string) {
       // console.log(messagetype+","+this.messagetype);
       this.messageService.clear('key');
       if(messagetype=="success"){
-        this.router.navigate(['master-data/']);
+        this.router.navigate(['employees/']);
       }
       // this.router.navigate(['master-data/']);
   }

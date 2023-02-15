@@ -6,7 +6,7 @@ using System;
 
 namespace BackEnd_Api.Controllers
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class MasterDetailsController : Controller

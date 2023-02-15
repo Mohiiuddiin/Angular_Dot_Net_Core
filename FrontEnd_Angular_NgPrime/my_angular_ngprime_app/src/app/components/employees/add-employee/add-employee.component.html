@@ -21,8 +21,7 @@
       </div>
   </ng-template>
 </p-toast>
-<div class="container my-5">
-    
+<div class="container my-5">    
     <!-- <form #form="ngForm" name="form" (ngSubmit)="form.form.valid && addEmployeeFunc()" style="margin-left: 20%;margin-right: 20%;">
         <div class="card">
                 <div class="flex align-items-center justify-content-center bg-blue-500 font-bold text-white m-2 border-round" style="min-width: 200px; min-height: 100%">
@@ -138,12 +137,12 @@
           </div>
         </div>
     </form>  -->
- <!-- <select [(ngModel)]="employee.departmentId" id="departmentId" name="departmentId" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" 
+    <!-- <select [(ngModel)]="employee.departmentId" id="departmentId" name="departmentId" class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary" 
             style="appearance: auto">
               <option value="">Select Department</option>  
               <option *ngFor="let dep of departments" value="{{dep.id}}">{{dep.name}}</option>              
           </select> -->
-          
+     
     <!-- <div *ngIf="ngForm.submitted && employee.name.errors" f class="invalid-feedback">
       <div *ngIf="employee.name.errors['required']">Username is required</div>
       <div *ngIf="employee.name.errors['minlength']">
@@ -159,9 +158,7 @@
             <h3>Add New Employee</h3>
         </div>
   <br/>
-  <br/>         
-  
-
+  <br/>
   <div class="p-fluid grid formgrid">
     <div class="field col-12 md:col-6">
     <label for="name" style="font-weight: bold;">Name</label>
@@ -171,7 +168,10 @@
   </div>
   <div class="field col-12 md:col-6">
     <label for="email" style="font-weight: bold;">Email</label>
-    <input   id="email" name="email" formControlName="email" type="text" [(ngModel)]="employee.email"  pInputText> 
+    <input   id="email" name="email" formControlName="email" type="text" [(ngModel)]="employee.email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" required pInputText>
+    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+      <div *ngIf="f.email.errors['required']">email is required</div>
+  </div> 
 </div>
 </div>
 <div class="p-fluid grid formgrid">

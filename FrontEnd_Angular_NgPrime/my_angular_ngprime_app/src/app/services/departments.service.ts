@@ -24,11 +24,9 @@ export class DepartmentsService implements OnInit {
       },
       error:(response) => 
       {
-        console.log(response);        
+        console.log(response);  
       }
-    }); 
-    
-    
+    });
   }
 
   ngOnInit(): void {

@@ -26,7 +26,6 @@ namespace BackEnd_Api.Controllers
         public async Task<IActionResult> Add([FromBody] Employee employee)
         {
             employee.Id = Guid.NewGuid();
-
             var dept = await _context.Departments.Where(x => x.Id == employee.DepartmentId).FirstAsync();
             employee.DepartmentName = dept.Name; await _context.Employees.AddAsync(employee);
             await _context.SaveChangesAsync();
@@ -38,12 +37,10 @@ namespace BackEnd_Api.Controllers
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
-
             if (employee == null)
             {
                 return NotFound();
             }
-
             return Ok(employee);
         }
 
@@ -52,9 +49,6 @@ namespace BackEnd_Api.Controllers
         public async Task<IActionResult> Update([FromRoute] Guid id, Employee employeeToUpdate)
         {
             var employee = await _context.Employees.FindAsync(id);
-
-
-
             if (employee == null)
             {
                 return NotFound();
@@ -66,11 +60,7 @@ namespace BackEnd_Api.Controllers
             employee.DepartmentId = employeeToUpdate.DepartmentId;
             var dept = await _context.Departments.Where(x => x.Id == employeeToUpdate.DepartmentId).FirstAsync();
             employee.DepartmentName = dept.Name;
-
-
             await _context.SaveChangesAsync();
-
-
             return Ok(employee);
         }
 

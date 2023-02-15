@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { department } from 'src/app/models/department.model';
 import { DepartmentsService } from 'src/app/services/departments.service';
@@ -16,7 +17,11 @@ export class AddDepartmentComponent implements OnInit {
      
   }
   //ame,email,phone,salary,department
-  constructor(private departmentService:DepartmentsService,public ref: DynamicDialogRef,private router:Router,private active_route:ActivatedRoute){
+  constructor(private departmentService:DepartmentsService,
+    public ref: DynamicDialogRef,
+    private router:Router,
+    private messageService : MessageService,
+    private active_route:ActivatedRoute){
   }
 
   ngOnInit(): void{
@@ -39,10 +44,29 @@ export class AddDepartmentComponent implements OnInit {
             this.router.navigate(['departments']);
           }  else{
             this.router.navigate(['add-employee']);
-          }       
+          }      
+          
+          this.messageService.add({key: 'key',severity: 'success',summary: 'Saved Department Successfully', detail: 'Name :' + department.name});
        }
      });
 
      this.ref.close();
+  }
+
+  onConfirm1() {
+    //this.messageService.clear('key');
+    //this.router.navigate(['master-data/']);
+  }
+
+  onReject1() {
+      // console.log(messagetype+","+this.messagetype);
+      // this.messageService.clear('key');
+      // if(messagetype=="success"){
+      //   this.router.navigate(['master-data/']);
+      // }
+      // this.router.navigate(['master-data/']);
+  }
+  clear1() {
+    this.messageService.clear();
   }
 }
