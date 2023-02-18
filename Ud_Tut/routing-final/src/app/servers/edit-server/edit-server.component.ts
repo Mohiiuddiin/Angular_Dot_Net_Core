@@ -55,4 +55,11 @@ export class EditServerComponent implements OnInit, CanComponentDeactivate {
       return true;
     }
   }
+
+  
+
+
+  // canDeactivate1(): Observable<boolean> | Promise<boolean> | boolean{
+
+  // }
 }
