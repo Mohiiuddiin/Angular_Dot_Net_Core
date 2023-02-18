@@ -38,9 +38,7 @@ export class AddEmployeeComponent implements OnInit {
       gender: '',
       employeeStatus: '',
       address: '',
-      dateOfBirth:'',
-      
-
+      dateOfBirth:'',   
    }
 
    department:department = {
