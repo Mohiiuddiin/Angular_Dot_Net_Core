@@ -16,7 +16,7 @@ export class ServerComponent implements OnInit {
               private router: Router) {
   }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.route.data
       .subscribe(
         (data: Data) => {
