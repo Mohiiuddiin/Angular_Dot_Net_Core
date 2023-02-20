@@ -154,6 +154,9 @@ namespace BackEnd_Api.Migrations
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Tax")
                         .HasColumnType("decimal(18,2)");
 

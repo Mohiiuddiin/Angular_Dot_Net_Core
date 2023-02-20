@@ -4,12 +4,12 @@
 
 namespace BackEnd_Api.Migrations
 {
-    public partial class add_pay_type_field : Migration
+    public partial class addstatuscol : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "PaymentType",
+                name: "Status",
                 table: "MastersData",
                 type: "nvarchar(max)",
                 nullable: true);
@@ -18,7 +18,7 @@ namespace BackEnd_Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "PaymentType",
+                name: "Status",
                 table: "MastersData");
         }
     }

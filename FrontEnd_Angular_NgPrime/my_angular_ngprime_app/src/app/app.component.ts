@@ -1,6 +1,7 @@
 import { Component, DoCheck } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem, SelectItem, SelectItemGroup } from 'primeng/api';
+import { MasterDetailsService } from './services/master-details.service';
 import { UserLoginService } from './services/user-login.service';
 
 @Component({
@@ -10,24 +11,30 @@ import { UserLoginService } from './services/user-login.service';
 })
 export class AppComponent implements DoCheck {
 
-    
+    pendingStatusCount = 0;
+
 
     //////
     title = 'my_angular_ngprime_app';
-
     items: MenuItem[] = [];
     isMenuVisible = true;
     isadmin = false;
-
 /**
  *
  */
-    constructor(private route: Router, private service: UserLoginService) {
-            
+    constructor(private route: Router, private service: UserLoginService,private master_service : MasterDetailsService) {        
     }
 
-
     ngOnInit() {
+        this.GetAllMasterData();
+        // this.pendingStatusCount = this.master_service.pendingStatusCount;
+        this.master_service.statusChanged
+        .subscribe(
+            (stat: number) => {                
+                this.pendingStatusCount = stat;
+                // console.log(this.departments);
+            }
+        );
         this.items = [
             {
                 label:'File',
@@ -187,6 +194,19 @@ export class AppComponent implements DoCheck {
         ];
     }
 
+    result : any;
+    stat : any;
+    GetAllMasterData(){
+        this.master_service.GetAllMasterData().subscribe(res=>{
+            this.result = res;            
+            Object.keys(this.result).forEach(key => {
+                this.stat = this.result[key].status.toString();                
+                if(this.stat=='Pending'){
+                    this.pendingStatusCount++;
+                }
+            });
+        })
+      }
     
     ngDoCheck(): void {
         const currentroute = this.route.url;

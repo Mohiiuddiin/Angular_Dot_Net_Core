@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -7,9 +7,22 @@ import { environment } from 'src/environments/environment.prod';
 })
 
 export class MasterDetailsService {
-
+  pendingStatusCount = 0;  
+  statusChanged = new EventEmitter<number>();  
   baseApiUrl:string  = environment.base_api_url;
-  constructor(private htttp:HttpClient) { }
+  
+  result : any;
+  constructor(private htttp:HttpClient) { 
+    this.GetAllMasterData().subscribe(res=>{
+        this.result = res;            
+        Object.keys(this.result).forEach(key => {                             
+            if(this.result[key].status=='Pending'){
+                this.pendingStatusCount = this.pendingStatusCount + 1;
+            }
+        });   
+    });
+    // console.log(this.pendingStatusCount);
+  }
 
   getCustomers()
   {
@@ -51,15 +64,23 @@ export class MasterDetailsService {
     return this.htttp.get(this.baseApiUrl+'/api/MasterDetails/GetMasterDetailByInv/'+invoiceno);
   }
   RemoveMasterDataByInv(invoiceno:any){
+    this.statusOnChange();
     return this.htttp.delete(this.baseApiUrl+'/api/MasterDetails/'+invoiceno);
   }
 
   GetAllMasterData(){
+    
     return this.htttp.get(this.baseApiUrl+'/api/MasterDetails/');
   }
 
   AutoGeberatedInvNo(){
     return this.htttp.get(this.baseApiUrl+'/api/MasterDetails/AutoGeberatedInvNo');
+  }
+
+  statusOnChange(){   
+    this.pendingStatusCount = this.pendingStatusCount - 1;
+    this.statusChanged.emit(this.pendingStatusCount);
+    // return this.departments;
   }
 
 }

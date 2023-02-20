@@ -132,7 +132,7 @@ export class ListingComponent implements OnInit {
   // Editinvoice(invoiceno: any) {
   //   this.router.navigateByUrl('/editinvoice/' + invoiceno);
   // }
-  displayedColumns: string[] = ['invoiceNo','customerName', 'remarks','total','tax', 'netTotal','action'];
+  displayedColumns: string[] = ['invoiceNo','customerName', 'remarks','total','tax', 'netTotal', 'status','action'];
 
   clearTbl(table: any) {
     table.clear();

@@ -23,8 +23,8 @@ namespace BackEnd_Api.Models
         public string CreateUser { get; set; }
         public DateTime? CreateDate { get; set; }
         public List<MasterDetailData> Details { get; set; }
-
         public string PaymentType { get; set; }
+        public string Status { get; set; }
     }
 
     
