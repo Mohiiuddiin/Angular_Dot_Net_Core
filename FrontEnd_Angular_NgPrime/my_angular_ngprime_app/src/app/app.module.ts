@@ -20,6 +20,7 @@ import {DynamicDialogModule} from 'primeng/dynamicdialog';
 
 
 
+
 import {TableModule} from 'primeng/table';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
@@ -38,7 +39,7 @@ import {SliderModule} from 'primeng/slider';
 import {CalendarModule} from 'primeng/calendar';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {MultiSelectModule} from 'primeng/multiselect';
-
+import {FullCalendarModule} from '@fullcalendar/angular';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
 import { TokenInterceptorServiceService } from './services/token-interceptor-service.service';
@@ -86,7 +87,8 @@ import { TokenInterceptorServiceService } from './services/token-interceptor-ser
     ,ConfirmDialogModule,
     MultiSelectModule,
     PanelModule,
-    DynamicDialogModule
+    DynamicDialogModule,FullCalendarModule
+    
 
     // ToastrModule.forRoot()
   ],

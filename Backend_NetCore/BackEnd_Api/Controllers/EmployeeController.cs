@@ -22,6 +22,15 @@ namespace BackEnd_Api.Controllers
             return Ok(employee);
         }
 
+        [HttpGet]
+        [Route("GetCalenderData")]
+        public async Task<IActionResult> GetCalenderData()
+        {
+            List<CalenderData> calenderDatas = new List<CalenderData>();
+            calenderDatas = await _context.CalenderData.ToListAsync();
+            return Ok(calenderDatas);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] Employee employee)
         {

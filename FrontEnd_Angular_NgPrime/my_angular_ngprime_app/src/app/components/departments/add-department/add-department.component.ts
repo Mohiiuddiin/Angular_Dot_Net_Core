@@ -40,33 +40,33 @@ export class AddDepartmentComponent implements OnInit {
        next:(department)=>{
           //  console.log(department);
           // console.log('...dkdjkf'+this.router.url);
-          if(this.router.url!="/add-employee"){
+          if(this.router.url!="/add-employee")
+          {
             this.router.navigate(['departments']);
-          }  else{
+          }  else
+          {
             this.router.navigate(['add-employee']);
-          }      
-          
+          }                
           this.messageService.add({key: 'key',severity: 'success',summary: 'Saved Department Successfully', detail: 'Name :' + department.name});
        }
      });
-
      this.ref.close();
   }
 
-  onConfirm1() {
-    //this.messageService.clear('key');
-    //this.router.navigate(['master-data/']);
-  }
+  // onConfirm1() {
+  //   //this.messageService.clear('key');
+  //   //this.router.navigate(['master-data/']);
+  // }
 
-  onReject1() {
-      // console.log(messagetype+","+this.messagetype);
-      // this.messageService.clear('key');
-      // if(messagetype=="success"){
-      //   this.router.navigate(['master-data/']);
-      // }
-      // this.router.navigate(['master-data/']);
-  }
-  clear1() {
-    this.messageService.clear();
-  }
+  // onReject1() {
+  //     // console.log(messagetype+","+this.messagetype);
+  //     // this.messageService.clear('key');
+  //     // if(messagetype=="success"){
+  //     //   this.router.navigate(['master-data/']);
+  //     // }
+  //     // this.router.navigate(['master-data/']);
+  // }
+  // clear1() {
+  //   this.messageService.clear();
+  // }
 }

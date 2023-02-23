@@ -1,7 +1,6 @@
-import {  Component, OnInit } from '@angular/core';
+import {  ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NG_VALIDATORS,RequiredValidator,MinLengthValidator,MaxLengthValidator,EmailValidator, Validators, FormBuilder } from '@angular/forms';
-
 import { FilterService, MessageService, SelectItemGroup } from 'primeng/api';
 import { department } from 'src/app/models/department.model';
 import { Employee } from 'src/app/models/employee.model';
@@ -9,6 +8,12 @@ import { DepartmentsService } from 'src/app/services/departments.service';
 import { EmployeesService } from 'src/app/services/employees.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AddDepartmentComponent } from '../../departments/add-department/add-department.component';
+import { EventService } from 'src/app/services/event.service';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { DateSelectArg, EventApi, EventClickArg } from '@fullcalendar/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-employee',
@@ -38,7 +43,7 @@ export class AddEmployeeComponent implements OnInit {
       gender: '',
       employeeStatus: '',
       address: '',
-      dateOfBirth:'',   
+      dateOfBirth:'',    
    }
 
    department:department = {
@@ -49,6 +54,10 @@ export class AddEmployeeComponent implements OnInit {
   selectedDept: department = {id:"",name:""};
   messagetype:any;
   ref:any;
+  events: any[] = [];
+  options: any;
+  currentEvents: EventApi[] = [];
+  eventGuid = 0;
 
    //ame,email,phone,salary,department
    constructor( public dialogService: DialogService,
@@ -57,7 +66,7 @@ export class AddEmployeeComponent implements OnInit {
                 private employeeService:EmployeesService,
                 private departmentService:DepartmentsService,
                 private router:Router,
-                private filterService: FilterService){           
+                private filterService: FilterService,private eventService: EventService,private changeDetector: ChangeDetectorRef){           
    }
 
   //  ngOnChanges(changes: any) {
@@ -83,6 +92,62 @@ export class AddEmployeeComponent implements OnInit {
   // }
 
    ngOnInit(): void{ 
+
+    // this.eventService.getEvents().then(events => {this.events = events;});
+    //     console.log(this.events);
+    // this.options = {
+    //     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+    //     defaultDate: '2023-02-01',
+    //     header: {
+    //         left: 'prev,next',
+    //         center: 'title',
+    //         right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    //     },
+    //     editable: true
+    // };
+    this.eventService.getEvents().subscribe(events => {
+      this.events = events;
+      this.options = {...this.options, ...{events: events}};
+  });
+
+  this.options = {
+      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+      initialDate: '2023-02-01',
+      weekends: true,
+      editable: true,
+      selectable: true,
+      selectMirror: true,
+      dayMaxEvents: true,
+      select: this.handleDateSelect.bind(this),
+      eventClick: this.handleEventClick.bind(this),
+      eventsSet: this.handleEvents.bind(this),
+      headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      dayRender: function (dayRenderInfo:any) {      
+        console.log(dayRenderInfo);  
+        let dateMoment = moment(dayRenderInfo.date);
+        if (dateMoment.day() === 6 || dateMoment.day() === 0) {
+          dayRenderInfo.el.style.backgroundColor = '#d6e7e1';
+        }
+        else {
+          dayRenderInfo.el.style.backgroundColor = 'white';
+        }
+        return dayRenderInfo;
+      },
+      eventRender:function(){
+        console.log("ddd"); 
+      }
+      
+      // editable: true,
+      // selectable: true,
+      // selectMirror: true,
+      // dayMaxEvents: true
+  };
+
+
     if(this.departments.length==0){
       this.get_departments();
     }
@@ -152,7 +217,6 @@ export class AddEmployeeComponent implements OnInit {
       address: this.builder.control({value:'',disabled:false},Validators.required),
       dateOfBirth:this.builder.control({value:'',disabled:false},Validators.required),    
   });
-
   
   get_departments(){
     this.departmentService.getAll().subscribe({
@@ -250,6 +314,7 @@ export class AddEmployeeComponent implements OnInit {
       }
       // this.router.navigate(['master-data/']);
   }
+
   clear() {
     this.messageService.clear();
   }
@@ -264,6 +329,46 @@ export class AddEmployeeComponent implements OnInit {
       });
       //console.log('success');
       //this.get_departments();
+  }
+
+  handleEventClick(clickInfo: EventClickArg) {
+    console.log("from handleEventClick:");
+    console.log(clickInfo);
+
+    console.log("from handleEventClick");
+    console.log(clickInfo.event);
+
+    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+      clickInfo.event.remove();      
+    }
+  }
+
+  handleEvents(events: EventApi[]) {
+    console.log("from handleEvents"+events);
+
+    this.currentEvents = events;
+    this.changeDetector.detectChanges();
+  }
+
+  handleDateSelect(selectInfo: DateSelectArg) {
+
+    console.log("from selectInfo"+selectInfo);
+    const title = prompt('Please enter a new title for your event');
+    const calendarApi = selectInfo.view.calendar;
+    calendarApi.unselect(); // clear date selection
+
+    if (title) {
+      calendarApi.addEvent({
+        id: this.createEventId(),
+        title,
+        start: selectInfo.startStr,
+        end: selectInfo.endStr,
+        allDay: selectInfo.allDay
+      });
+    }
+  }
+  createEventId() {  
+    return String(this.eventGuid++);
   }
 }
 

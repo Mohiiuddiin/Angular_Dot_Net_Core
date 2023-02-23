@@ -9,31 +9,27 @@ import { department } from '../models/department.model';
 })
 export class DepartmentsService implements OnInit {
 
-  
   departments:department[] = [];
-  departmentsChanged = new EventEmitter<department[]>();
-  
+  departmentsChanged = new EventEmitter<department[]>();  
   baseApiUrl:string  = environment.base_api_url;
   constructor(private htttp:HttpClient) {
-    this.getAll().subscribe({
-      next:(departments) => 
-      {        
-        this.departments = departments;
-        this.departmentsChanged.emit(this.departments.slice());
-        // console.log(this.departments);
-      },
-      error:(response) => 
-      {
-        console.log(response);  
-      }
-    });
+      this.getAll().subscribe({
+        next:(departments) => 
+        {        
+          this.departments = departments;
+          this.departmentsChanged.emit(this.departments.slice());
+          // console.log(this.departments);
+        },
+        error:(response) => 
+        {
+          console.log(response);  
+        }
+      });
   }
 
   ngOnInit(): void {
     
   }
-
-  
 
   getAll():Observable<department[]>{
     return this.htttp.get<department[]>(this.baseApiUrl+'/api/Department');

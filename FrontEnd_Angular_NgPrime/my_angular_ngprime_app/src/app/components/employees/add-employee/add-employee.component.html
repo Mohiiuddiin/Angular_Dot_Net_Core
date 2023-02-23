@@ -28,7 +28,7 @@
                     <h3>Add New Employee</h3>
                 </div>
           <br/>
-          <br/>         
+          <br/>
           
 
       <div class="formgrid grid">
@@ -232,20 +232,18 @@
   <div class="field col-12 md:col-6">
     <label for="address" style="font-weight: bold;">Address</label>
     <textarea pInputTextarea formControlName="address" id="address" type="text" name="address" ></textarea> 
-  </div> 
-  
+  </div>   
     <div class="field col-12 md:col-6">
-        <label for="city" style="font-weight: bold;">City</label>
-        <p-autoComplete formControlName="city" id="city" name="city" [group]="true" [suggestions]="filteredGroups" (completeMethod)="filterGroupedCity($event)" field="label" [dropdown]="true" >
-            <ng-template let-group pTemplate="group">
-                <div class="flex align-items-center">
-                    <span [class]="'mr-2 flag flag-' + group.value" style="width: 20px"></span>
-                    <span>{{group.label}}</span>
-                </div>
-            </ng-template>
-        </p-autoComplete>
-    
-</div>
+      <label for="city" style="font-weight: bold;">City</label>
+      <p-autoComplete formControlName="city" id="city" name="city" [group]="true" [suggestions]="filteredGroups" (completeMethod)="filterGroupedCity($event)" field="label" [dropdown]="true" >
+          <ng-template let-group pTemplate="group">
+              <div class="flex align-items-center">
+                  <span [class]="'mr-2 flag flag-' + group.value" style="width: 20px"></span>
+                  <span>{{group.label}}</span>
+              </div>
+          </ng-template>
+      </p-autoComplete>    
+  </div>
   </div>
   <div class="p-fluid grid formgrid">  
         <div class="field col-12 md:col-6">
@@ -258,13 +256,28 @@
       </div> 
 </div>   
 <div class="p-fluid grid formgrid">
-</div>
-      
+</div>      
   <div class="p-fluid grid formgrid">
   <p-button label="Submit" icon="pi pi-check" iconPos="right" type="submit"></p-button>
   </div>
 </div>
   </form>    
 </div>
+
+
+<div class="container my-5" style="margin-left: 20%;margin-right: 20%;">    
+  
+<full-calendar [events]="events" [options]="options">
+  <ng-template #eventContent let-arg>
+    <b>{{ arg.timeText }}</b>
+    <i>{{ arg.event.title }}</i>
+  </ng-template>
+</full-calendar>
+
+</div>
+
+<!-- <p-fullCalendar [events]="events" [options]="options"></p-fullCalendar> -->
 <!-- <br/> -->
 <!-- <app-employees-list></app-employees-list> -->
+
+

@@ -14,5 +14,6 @@ namespace BackEnd_Api.Models
         public DbSet<Customer> Customers { get; set; }
         public DbSet<MasterData> MastersData { get; set; }
         public DbSet<MasterDetailData> MasterDetailsData { get; set; }
+        public DbSet<CalenderData> CalenderData { get; set; }
     }
 }
